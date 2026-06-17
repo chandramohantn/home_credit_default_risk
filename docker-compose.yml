@@ -1,0 +1,17 @@
+services:
+  dozzle:
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "9999:8080"
+    restart: unless-stopped
+
+  workspace:
+    # Use any of your pre-built images: 
+    # ml-workspace:latest, dl-workspace-cpu:latest, dl-workspace-gpu:latest, llm-workspace:latest
+    image: ${WORKSPACE_IMAGE:-ml-workspace:latest}
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/workspace

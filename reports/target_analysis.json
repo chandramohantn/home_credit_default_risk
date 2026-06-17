@@ -1,0 +1,6 @@
+{
+    "positive_count": 24825,
+    "negative_count": 282686,
+    "imbalance_ratio": 11.387150050352467,
+    "baseline_accuracy": 91.92711805431351
+}

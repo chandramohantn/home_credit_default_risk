@@ -1,0 +1,5 @@
+{
+    "potential_leakage_columns": [
+        "SK_ID_CURR"
+    ]
+}
