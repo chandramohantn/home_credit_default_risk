@@ -1,14 +1,14 @@
 """
-Visualization module for data profiling.
+Visualization module for data profiling and EDA.
 
-This package provides visual tools to interpret data profiling results,
-including missing values, target distribution, and correlations.
-
-The __init__.py file simplifies the package's public API by exposing core 
-visualizers directly at the package level, allowing for cleaner imports 
-like 'from visualization import TargetVisualizer'.
+This package provides visual tools to interpret data profiling and EDA results,
+including distributions, target relationships, and importance.
 """
 
 from .missing_values import MissingValueVisualizer
 from .target_analysis import TargetVisualizer
 from .correlations import CorrelationVisualizer
+from .distributions import DistributionVisualizer
+from .outliers import OutlierVisualizer
+from .importance import ImportanceVisualizer
+from .dimensionality import DimensionalityVisualizer
