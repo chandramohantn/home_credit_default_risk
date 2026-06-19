@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-06-19T14:56:09Z",
+  "steps": [
+    {
+      "step": "cleaner",
+      "input_columns": 121,
+      "output_columns": 121,
+      "elapsed_seconds": 2.826991319656372
+    },
+    {
+      "step": "missing",
+      "input_columns": 121,
+      "output_columns": 188,
+      "elapsed_seconds": 2.6837594509124756
+    },
+    {
+      "step": "rare_categories",
+      "input_columns": 188,
+      "output_columns": 188,
+      "elapsed_seconds": 0.5634291172027588
+    },
+    {
+      "step": "encoder",
+      "input_columns": 188,
+      "output_columns": 188,
+      "elapsed_seconds": 2.521397352218628
+    }
+  ],
+  "input_shape": [
+    246008,
+    121
+  ],
+  "output_shape": [
+    246008,
+    188
+  ],
+  "leakage_analysis": {
+    "id_like_columns": [
+      "SK_ID_CURR"
+    ],
+    "highly_correlated_columns": {},
+    "near_constant_columns": []
+  }
+}

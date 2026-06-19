@@ -1,0 +1,946 @@
+{
+  "limits": {
+    "SK_ID_CURR": [
+      -77838.25,
+      634369.75
+    ],
+    "NAME_CONTRACT_TYPE": [
+      0.08142425283621198,
+      0.08500509593628354
+    ],
+    "CODE_GENDER": [
+      0.023151624193046436,
+      0.14756945443903163
+    ],
+    "FLAG_OWN_CAR": [
+      0.05445241681622152,
+      0.10374323648970127
+    ],
+    "FLAG_OWN_REALTY": [
+      0.07471666984377306,
+      0.08753434725921955
+    ],
+    "CNT_CHILDREN": [
+      -1.5,
+      2.5
+    ],
+    "AMT_INCOME_TOTAL": [
+      -22500.0,
+      337500.0
+    ],
+    "AMT_CREDIT": [
+      -537975.0,
+      1616625.0
+    ],
+    "AMT_ANNUITY": [
+      -10617.75,
+      61724.25
+    ],
+    "AMT_GOODS_PRICE": [
+      -423000.0,
+      1341000.0
+    ],
+    "NAME_TYPE_SUITE": [
+      0.0805024719070192,
+      0.08306362690373986
+    ],
+    "NAME_INCOME_TYPE": [
+      0.006551710034733281,
+      0.14913206913784796
+    ],
+    "NAME_EDUCATION_TYPE": [
+      0.07512501989519473,
+      0.09814367961865679
+    ],
+    "NAME_FAMILY_STATUS": [
+      0.06596828640401675,
+      0.0902164608529164
+    ],
+    "NAME_HOUSING_TYPE": [
+      0.07702805627542308,
+      0.07914995959246807
+    ],
+    "REGION_POPULATION_RELATIVE": [
+      -0.017979500000000002,
+      0.056648500000000004
+    ],
+    "DAYS_BIRTH": [
+      -30581.0,
+      -1493.0
+    ],
+    "DAYS_EMPLOYED": [
+      -6468.5,
+      3415.5
+    ],
+    "DAYS_REGISTRATION": [
+      -15677.5,
+      6182.5
+    ],
+    "DAYS_ID_PUBLISH": [
+      -8165.0,
+      2147.0
+    ],
+    "OWN_CAR_AGE": [
+      9.0,
+      9.0
+    ],
+    "FLAG_MOBIL": [
+      1.0,
+      1.0
+    ],
+    "FLAG_EMP_PHONE": [
+      1.0,
+      1.0
+    ],
+    "FLAG_WORK_PHONE": [
+      0.0,
+      0.0
+    ],
+    "FLAG_CONT_MOBILE": [
+      1.0,
+      1.0
+    ],
+    "FLAG_PHONE": [
+      -1.5,
+      2.5
+    ],
+    "FLAG_EMAIL": [
+      0.0,
+      0.0
+    ],
+    "OCCUPATION_TYPE": [
+      0.005586642595884685,
+      0.16245361901698988
+    ],
+    "CNT_FAM_MEMBERS": [
+      0.5,
+      4.5
+    ],
+    "REGION_RATING_CLIENT": [
+      2.0,
+      2.0
+    ],
+    "REGION_RATING_CLIENT_W_CITY": [
+      2.0,
+      2.0
+    ],
+    "WEEKDAY_APPR_PROCESS_START": [
+      0.07358993913271256,
+      0.08777255393590361
+    ],
+    "HOUR_APPR_PROCESS_START": [
+      4.0,
+      20.0
+    ],
+    "REG_REGION_NOT_LIVE_REGION": [
+      0.0,
+      0.0
+    ],
+    "REG_REGION_NOT_WORK_REGION": [
+      0.0,
+      0.0
+    ],
+    "LIVE_REGION_NOT_WORK_REGION": [
+      0.0,
+      0.0
+    ],
+    "REG_CITY_NOT_LIVE_CITY": [
+      0.0,
+      0.0
+    ],
+    "REG_CITY_NOT_WORK_CITY": [
+      0.0,
+      0.0
+    ],
+    "LIVE_CITY_NOT_WORK_CITY": [
+      0.0,
+      0.0
+    ],
+    "ORGANIZATION_TYPE": [
+      0.03206707542872515,
+      0.12933728615603818
+    ],
+    "EXT_SOURCE_1": [
+      0.5054455334342673,
+      0.5054455334342673
+    ],
+    "EXT_SOURCE_2": [
+      -0.01329174251319204,
+      1.0694186782444581
+    ],
+    "EXT_SOURCE_3": [
+      0.08818491400145828,
+      0.9652909253367954
+    ],
+    "APARTMENTS_AVG": [
+      0.0876,
+      0.0876
+    ],
+    "BASEMENTAREA_AVG": [
+      0.0764,
+      0.0764
+    ],
+    "YEARS_BEGINEXPLUATATION_AVG": [
+      0.9808500000000001,
+      0.9828499999999999
+    ],
+    "YEARS_BUILD_AVG": [
+      0.7552,
+      0.7552
+    ],
+    "COMMONAREA_AVG": [
+      0.0211,
+      0.0211
+    ],
+    "ELEVATORS_AVG": [
+      0.0,
+      0.0
+    ],
+    "ENTRANCES_AVG": [
+      0.1379,
+      0.1379
+    ],
+    "FLOORSMAX_AVG": [
+      0.1667,
+      0.1667
+    ],
+    "FLOORSMIN_AVG": [
+      0.2083,
+      0.2083
+    ],
+    "LANDAREA_AVG": [
+      0.0482,
+      0.0482
+    ],
+    "LIVINGAPARTMENTS_AVG": [
+      0.0756,
+      0.0756
+    ],
+    "LIVINGAREA_AVG": [
+      0.0744,
+      0.0744
+    ],
+    "NONLIVINGAPARTMENTS_AVG": [
+      0.0,
+      0.0
+    ],
+    "NONLIVINGAREA_AVG": [
+      0.0036,
+      0.0036
+    ],
+    "APARTMENTS_MODE": [
+      0.084,
+      0.084
+    ],
+    "BASEMENTAREA_MODE": [
+      0.0746,
+      0.0746
+    ],
+    "YEARS_BEGINEXPLUATATION_MODE": [
+      0.9816,
+      0.9816
+    ],
+    "YEARS_BUILD_MODE": [
+      0.7648,
+      0.7648
+    ],
+    "COMMONAREA_MODE": [
+      0.0191,
+      0.0191
+    ],
+    "ELEVATORS_MODE": [
+      0.0,
+      0.0
+    ],
+    "ENTRANCES_MODE": [
+      0.1379,
+      0.1379
+    ],
+    "FLOORSMAX_MODE": [
+      0.1667,
+      0.1667
+    ],
+    "FLOORSMIN_MODE": [
+      0.2083,
+      0.2083
+    ],
+    "LANDAREA_MODE": [
+      0.0459,
+      0.0459
+    ],
+    "LIVINGAPARTMENTS_MODE": [
+      0.0771,
+      0.0771
+    ],
+    "LIVINGAREA_MODE": [
+      0.0731,
+      0.0731
+    ],
+    "NONLIVINGAPARTMENTS_MODE": [
+      0.0,
+      0.0
+    ],
+    "NONLIVINGAREA_MODE": [
+      0.0011,
+      0.0011
+    ],
+    "APARTMENTS_MEDI": [
+      0.0874,
+      0.0874
+    ],
+    "BASEMENTAREA_MEDI": [
+      0.0759,
+      0.0759
+    ],
+    "YEARS_BEGINEXPLUATATION_MEDI": [
+      0.9808500000000001,
+      0.9828499999999999
+    ],
+    "YEARS_BUILD_MEDI": [
+      0.7585,
+      0.7585
+    ],
+    "COMMONAREA_MEDI": [
+      0.0209,
+      0.0209
+    ],
+    "ELEVATORS_MEDI": [
+      0.0,
+      0.0
+    ],
+    "ENTRANCES_MEDI": [
+      0.1379,
+      0.1379
+    ],
+    "FLOORSMAX_MEDI": [
+      0.1667,
+      0.1667
+    ],
+    "FLOORSMIN_MEDI": [
+      0.2083,
+      0.2083
+    ],
+    "LANDAREA_MEDI": [
+      0.0487,
+      0.0487
+    ],
+    "LIVINGAPARTMENTS_MEDI": [
+      0.0761,
+      0.0761
+    ],
+    "LIVINGAREA_MEDI": [
+      0.0748,
+      0.0748
+    ],
+    "NONLIVINGAPARTMENTS_MEDI": [
+      0.0,
+      0.0
+    ],
+    "NONLIVINGAREA_MEDI": [
+      0.0031,
+      0.0031
+    ],
+    "FONDKAPREMONT_MODE": [
+      0.04707293561830055,
+      0.10985976779360385
+    ],
+    "HOUSETYPE_MODE": [
+      0.036840377213479165,
+      0.12458394516599347
+    ],
+    "TOTALAREA_MODE": [
+      0.061900000000000004,
+      0.07550000000000001
+    ],
+    "WALLSMATERIAL_MODE": [
+      0.04142515811007034,
+      0.12131731905733376
+    ],
+    "EMERGENCYSTATE_MODE": [
+      0.0350307258798028,
+      0.12761937313333546
+    ],
+    "OBS_30_CNT_SOCIAL_CIRCLE": [
+      -3.0,
+      5.0
+    ],
+    "DEF_30_CNT_SOCIAL_CIRCLE": [
+      0.0,
+      0.0
+    ],
+    "OBS_60_CNT_SOCIAL_CIRCLE": [
+      -3.0,
+      5.0
+    ],
+    "DEF_60_CNT_SOCIAL_CIRCLE": [
+      0.0,
+      0.0
+    ],
+    "DAYS_LAST_PHONE_CHANGE": [
+      -3513.0,
+      1671.0
+    ],
+    "FLAG_DOCUMENT_2": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_3": [
+      -1.5,
+      2.5
+    ],
+    "FLAG_DOCUMENT_4": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_5": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_6": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_7": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_8": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_9": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_10": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_11": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_12": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_13": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_14": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_15": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_16": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_17": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_18": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_19": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_20": [
+      0.0,
+      0.0
+    ],
+    "FLAG_DOCUMENT_21": [
+      0.0,
+      0.0
+    ],
+    "AMT_REQ_CREDIT_BUREAU_HOUR": [
+      0.0,
+      0.0
+    ],
+    "AMT_REQ_CREDIT_BUREAU_DAY": [
+      0.0,
+      0.0
+    ],
+    "AMT_REQ_CREDIT_BUREAU_WEEK": [
+      0.0,
+      0.0
+    ],
+    "AMT_REQ_CREDIT_BUREAU_MON": [
+      0.0,
+      0.0
+    ],
+    "AMT_REQ_CREDIT_BUREAU_QRT": [
+      0.0,
+      0.0
+    ],
+    "AMT_REQ_CREDIT_BUREAU_YEAR": [
+      -2.0,
+      6.0
+    ],
+    "AMT_ANNUITY_isnull": [
+      0.0,
+      0.0
+    ],
+    "AMT_GOODS_PRICE_isnull": [
+      0.0,
+      0.0
+    ],
+    "NAME_TYPE_SUITE_isnull": [
+      0.0,
+      0.0
+    ],
+    "OWN_CAR_AGE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "OCCUPATION_TYPE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "CNT_FAM_MEMBERS_isnull": [
+      0.0,
+      0.0
+    ],
+    "EXT_SOURCE_1_isnull": [
+      -1.5,
+      2.5
+    ],
+    "EXT_SOURCE_2_isnull": [
+      0.0,
+      0.0
+    ],
+    "EXT_SOURCE_3_isnull": [
+      0.0,
+      0.0
+    ],
+    "APARTMENTS_AVG_isnull": [
+      -1.5,
+      2.5
+    ],
+    "BASEMENTAREA_AVG_isnull": [
+      -1.5,
+      2.5
+    ],
+    "YEARS_BEGINEXPLUATATION_AVG_isnull": [
+      -1.5,
+      2.5
+    ],
+    "YEARS_BUILD_AVG_isnull": [
+      -1.5,
+      2.5
+    ],
+    "COMMONAREA_AVG_isnull": [
+      -1.5,
+      2.5
+    ],
+    "ELEVATORS_AVG_isnull": [
+      -1.5,
+      2.5
+    ],
+    "ENTRANCES_AVG_isnull": [
+      -1.5,
+      2.5
+    ],
+    "FLOORSMAX_AVG_isnull": [
+      -1.5,
+      2.5
+    ],
+    "FLOORSMIN_AVG_isnull": [
+      -1.5,
+      2.5
+    ],
+    "LANDAREA_AVG_isnull": [
+      -1.5,
+      2.5
+    ],
+    "LIVINGAPARTMENTS_AVG_isnull": [
+      -1.5,
+      2.5
+    ],
+    "LIVINGAREA_AVG_isnull": [
+      -1.5,
+      2.5
+    ],
+    "NONLIVINGAPARTMENTS_AVG_isnull": [
+      -1.5,
+      2.5
+    ],
+    "NONLIVINGAREA_AVG_isnull": [
+      -1.5,
+      2.5
+    ],
+    "APARTMENTS_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "BASEMENTAREA_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "YEARS_BEGINEXPLUATATION_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "YEARS_BUILD_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "COMMONAREA_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "ELEVATORS_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "ENTRANCES_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "FLOORSMAX_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "FLOORSMIN_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "LANDAREA_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "LIVINGAPARTMENTS_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "LIVINGAREA_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "NONLIVINGAPARTMENTS_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "NONLIVINGAREA_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "APARTMENTS_MEDI_isnull": [
+      -1.5,
+      2.5
+    ],
+    "BASEMENTAREA_MEDI_isnull": [
+      -1.5,
+      2.5
+    ],
+    "YEARS_BEGINEXPLUATATION_MEDI_isnull": [
+      -1.5,
+      2.5
+    ],
+    "YEARS_BUILD_MEDI_isnull": [
+      -1.5,
+      2.5
+    ],
+    "COMMONAREA_MEDI_isnull": [
+      -1.5,
+      2.5
+    ],
+    "ELEVATORS_MEDI_isnull": [
+      -1.5,
+      2.5
+    ],
+    "ENTRANCES_MEDI_isnull": [
+      -1.5,
+      2.5
+    ],
+    "FLOORSMAX_MEDI_isnull": [
+      -1.5,
+      2.5
+    ],
+    "FLOORSMIN_MEDI_isnull": [
+      -1.5,
+      2.5
+    ],
+    "LANDAREA_MEDI_isnull": [
+      -1.5,
+      2.5
+    ],
+    "LIVINGAPARTMENTS_MEDI_isnull": [
+      -1.5,
+      2.5
+    ],
+    "LIVINGAREA_MEDI_isnull": [
+      -1.5,
+      2.5
+    ],
+    "NONLIVINGAPARTMENTS_MEDI_isnull": [
+      -1.5,
+      2.5
+    ],
+    "NONLIVINGAREA_MEDI_isnull": [
+      -1.5,
+      2.5
+    ],
+    "FONDKAPREMONT_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "HOUSETYPE_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "TOTALAREA_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "WALLSMATERIAL_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "EMERGENCYSTATE_MODE_isnull": [
+      -1.5,
+      2.5
+    ],
+    "OBS_30_CNT_SOCIAL_CIRCLE_isnull": [
+      0.0,
+      0.0
+    ],
+    "DEF_30_CNT_SOCIAL_CIRCLE_isnull": [
+      0.0,
+      0.0
+    ],
+    "OBS_60_CNT_SOCIAL_CIRCLE_isnull": [
+      0.0,
+      0.0
+    ],
+    "DEF_60_CNT_SOCIAL_CIRCLE_isnull": [
+      0.0,
+      0.0
+    ],
+    "DAYS_LAST_PHONE_CHANGE_isnull": [
+      0.0,
+      0.0
+    ],
+    "AMT_REQ_CREDIT_BUREAU_HOUR_isnull": [
+      0.0,
+      0.0
+    ],
+    "AMT_REQ_CREDIT_BUREAU_DAY_isnull": [
+      0.0,
+      0.0
+    ],
+    "AMT_REQ_CREDIT_BUREAU_WEEK_isnull": [
+      0.0,
+      0.0
+    ],
+    "AMT_REQ_CREDIT_BUREAU_MON_isnull": [
+      0.0,
+      0.0
+    ],
+    "AMT_REQ_CREDIT_BUREAU_QRT_isnull": [
+      0.0,
+      0.0
+    ],
+    "AMT_REQ_CREDIT_BUREAU_YEAR_isnull": [
+      0.0,
+      0.0
+    ]
+  },
+  "outlier_counts": {
+    "SK_ID_CURR": 0,
+    "NAME_CONTRACT_TYPE": 23448,
+    "CODE_GENDER": 0,
+    "FLAG_OWN_CAR": 0,
+    "FLAG_OWN_REALTY": 0,
+    "CNT_CHILDREN": 3366,
+    "AMT_INCOME_TOTAL": 11247,
+    "AMT_CREDIT": 5260,
+    "AMT_ANNUITY": 5987,
+    "AMT_GOODS_PRICE": 11791,
+    "NAME_TYPE_SUITE": 44508,
+    "NAME_INCOME_TYPE": 0,
+    "NAME_EDUCATION_TYPE": 62951,
+    "NAME_FAMILY_STATUS": 73013,
+    "NAME_HOUSING_TYPE": 27625,
+    "REGION_POPULATION_RELATIVE": 6729,
+    "DAYS_BIRTH": 0,
+    "DAYS_EMPLOYED": 57668,
+    "DAYS_REGISTRATION": 543,
+    "DAYS_ID_PUBLISH": 0,
+    "OWN_CAR_AGE": 79597,
+    "FLAG_MOBIL": 1,
+    "FLAG_EMP_PHONE": 44154,
+    "FLAG_WORK_PHONE": 49123,
+    "FLAG_CONT_MOBILE": 462,
+    "FLAG_PHONE": 0,
+    "FLAG_EMAIL": 13957,
+    "OCCUPATION_TYPE": 0,
+    "CNT_FAM_MEMBERS": 3155,
+    "REGION_RATING_CLIENT": 64377,
+    "REGION_RATING_CLIENT_W_CITY": 62386,
+    "WEEKDAY_APPR_PROCESS_START": 0,
+    "HOUR_APPR_PROCESS_START": 1816,
+    "REG_REGION_NOT_LIVE_REGION": 3695,
+    "REG_REGION_NOT_WORK_REGION": 12584,
+    "LIVE_REGION_NOT_WORK_REGION": 10129,
+    "REG_CITY_NOT_LIVE_CITY": 19163,
+    "REG_CITY_NOT_WORK_CITY": 56839,
+    "LIVE_CITY_NOT_WORK_CITY": 44370,
+    "ORGANIZATION_TYPE": 0,
+    "EXT_SOURCE_1": 107412,
+    "EXT_SOURCE_2": 0,
+    "EXT_SOURCE_3": 3475,
+    "APARTMENTS_AVG": 120856,
+    "BASEMENTAREA_AVG": 102004,
+    "YEARS_BEGINEXPLUATATION_AVG": 113696,
+    "YEARS_BUILD_AVG": 80381,
+    "COMMONAREA_AVG": 74110,
+    "ELEVATORS_AVG": 46386,
+    "ENTRANCES_AVG": 95066,
+    "FLOORSMAX_AVG": 74127,
+    "FLOORSMIN_AVG": 52760,
+    "LANDAREA_AVG": 99963,
+    "LIVINGAPARTMENTS_AVG": 75674,
+    "LIVINGAREA_AVG": 122469,
+    "NONLIVINGAPARTMENTS_AVG": 31493,
+    "NONLIVINGAREA_AVG": 110066,
+    "APARTMENTS_MODE": 115272,
+    "BASEMENTAREA_MODE": 102102,
+    "YEARS_BEGINEXPLUATATION_MODE": 122893,
+    "YEARS_BUILD_MODE": 80463,
+    "COMMONAREA_MODE": 74102,
+    "ELEVATORS_MODE": 43329,
+    "ENTRANCES_MODE": 93399,
+    "FLOORSMAX_MODE": 71181,
+    "FLOORSMIN_MODE": 51526,
+    "LANDAREA_MODE": 99956,
+    "LIVINGAPARTMENTS_MODE": 77498,
+    "LIVINGAREA_MODE": 122359,
+    "NONLIVINGAPARTMENTS_MODE": 27751,
+    "NONLIVINGAREA_MODE": 110005,
+    "APARTMENTS_MEDI": 120731,
+    "BASEMENTAREA_MEDI": 102110,
+    "YEARS_BEGINEXPLUATATION_MEDI": 113808,
+    "YEARS_BUILD_MEDI": 80415,
+    "COMMONAREA_MEDI": 74099,
+    "ELEVATORS_MEDI": 45344,
+    "ENTRANCES_MEDI": 93826,
+    "FLOORSMAX_MEDI": 72756,
+    "FLOORSMIN_MEDI": 52069,
+    "LANDAREA_MEDI": 99941,
+    "LIVINGAPARTMENTS_MEDI": 77412,
+    "LIVINGAREA_MEDI": 122486,
+    "NONLIVINGAPARTMENTS_MEDI": 30270,
+    "NONLIVINGAREA_MEDI": 110061,
+    "FONDKAPREMONT_MODE": 0,
+    "HOUSETYPE_MODE": 0,
+    "TOTALAREA_MODE": 113223,
+    "WALLSMATERIAL_MODE": 0,
+    "EMERGENCYSTATE_MODE": 0,
+    "OBS_30_CNT_SOCIAL_CIRCLE": 15965,
+    "DEF_30_CNT_SOCIAL_CIRCLE": 28109,
+    "OBS_60_CNT_SOCIAL_CIRCLE": 15642,
+    "DEF_60_CNT_SOCIAL_CIRCLE": 20530,
+    "DAYS_LAST_PHONE_CHANGE": 341,
+    "FLAG_DOCUMENT_2": 11,
+    "FLAG_DOCUMENT_3": 0,
+    "FLAG_DOCUMENT_4": 22,
+    "FLAG_DOCUMENT_5": 3718,
+    "FLAG_DOCUMENT_6": 21579,
+    "FLAG_DOCUMENT_7": 46,
+    "FLAG_DOCUMENT_8": 20023,
+    "FLAG_DOCUMENT_9": 947,
+    "FLAG_DOCUMENT_10": 4,
+    "FLAG_DOCUMENT_11": 951,
+    "FLAG_DOCUMENT_12": 1,
+    "FLAG_DOCUMENT_13": 832,
+    "FLAG_DOCUMENT_14": 726,
+    "FLAG_DOCUMENT_15": 295,
+    "FLAG_DOCUMENT_16": 2465,
+    "FLAG_DOCUMENT_17": 61,
+    "FLAG_DOCUMENT_18": 2002,
+    "FLAG_DOCUMENT_19": 150,
+    "FLAG_DOCUMENT_20": 124,
+    "FLAG_DOCUMENT_21": 79,
+    "AMT_REQ_CREDIT_BUREAU_HOUR": 1280,
+    "AMT_REQ_CREDIT_BUREAU_DAY": 1173,
+    "AMT_REQ_CREDIT_BUREAU_WEEK": 6796,
+    "AMT_REQ_CREDIT_BUREAU_MON": 34913,
+    "AMT_REQ_CREDIT_BUREAU_QRT": 40400,
+    "AMT_REQ_CREDIT_BUREAU_YEAR": 5723,
+    "AMT_ANNUITY_isnull": 10,
+    "AMT_GOODS_PRICE_isnull": 221,
+    "NAME_TYPE_SUITE_isnull": 1029,
+    "OWN_CAR_AGE_isnull": 0,
+    "OCCUPATION_TYPE_isnull": 0,
+    "CNT_FAM_MEMBERS_isnull": 2,
+    "EXT_SOURCE_1_isnull": 0,
+    "EXT_SOURCE_2_isnull": 531,
+    "EXT_SOURCE_3_isnull": 48805,
+    "APARTMENTS_AVG_isnull": 0,
+    "BASEMENTAREA_AVG_isnull": 0,
+    "YEARS_BEGINEXPLUATATION_AVG_isnull": 0,
+    "YEARS_BUILD_AVG_isnull": 0,
+    "COMMONAREA_AVG_isnull": 0,
+    "ELEVATORS_AVG_isnull": 0,
+    "ENTRANCES_AVG_isnull": 0,
+    "FLOORSMAX_AVG_isnull": 0,
+    "FLOORSMIN_AVG_isnull": 0,
+    "LANDAREA_AVG_isnull": 0,
+    "LIVINGAPARTMENTS_AVG_isnull": 0,
+    "LIVINGAREA_AVG_isnull": 0,
+    "NONLIVINGAPARTMENTS_AVG_isnull": 0,
+    "NONLIVINGAREA_AVG_isnull": 0,
+    "APARTMENTS_MODE_isnull": 0,
+    "BASEMENTAREA_MODE_isnull": 0,
+    "YEARS_BEGINEXPLUATATION_MODE_isnull": 0,
+    "YEARS_BUILD_MODE_isnull": 0,
+    "COMMONAREA_MODE_isnull": 0,
+    "ELEVATORS_MODE_isnull": 0,
+    "ENTRANCES_MODE_isnull": 0,
+    "FLOORSMAX_MODE_isnull": 0,
+    "FLOORSMIN_MODE_isnull": 0,
+    "LANDAREA_MODE_isnull": 0,
+    "LIVINGAPARTMENTS_MODE_isnull": 0,
+    "LIVINGAREA_MODE_isnull": 0,
+    "NONLIVINGAPARTMENTS_MODE_isnull": 0,
+    "NONLIVINGAREA_MODE_isnull": 0,
+    "APARTMENTS_MEDI_isnull": 0,
+    "BASEMENTAREA_MEDI_isnull": 0,
+    "YEARS_BEGINEXPLUATATION_MEDI_isnull": 0,
+    "YEARS_BUILD_MEDI_isnull": 0,
+    "COMMONAREA_MEDI_isnull": 0,
+    "ELEVATORS_MEDI_isnull": 0,
+    "ENTRANCES_MEDI_isnull": 0,
+    "FLOORSMAX_MEDI_isnull": 0,
+    "FLOORSMIN_MEDI_isnull": 0,
+    "LANDAREA_MEDI_isnull": 0,
+    "LIVINGAPARTMENTS_MEDI_isnull": 0,
+    "LIVINGAREA_MEDI_isnull": 0,
+    "NONLIVINGAPARTMENTS_MEDI_isnull": 0,
+    "NONLIVINGAREA_MEDI_isnull": 0,
+    "FONDKAPREMONT_MODE_isnull": 0,
+    "HOUSETYPE_MODE_isnull": 0,
+    "TOTALAREA_MODE_isnull": 0,
+    "WALLSMATERIAL_MODE_isnull": 0,
+    "EMERGENCYSTATE_MODE_isnull": 0,
+    "OBS_30_CNT_SOCIAL_CIRCLE_isnull": 811,
+    "DEF_30_CNT_SOCIAL_CIRCLE_isnull": 811,
+    "OBS_60_CNT_SOCIAL_CIRCLE_isnull": 811,
+    "DEF_60_CNT_SOCIAL_CIRCLE_isnull": 811,
+    "DAYS_LAST_PHONE_CHANGE_isnull": 1,
+    "AMT_REQ_CREDIT_BUREAU_HOUR_isnull": 33244,
+    "AMT_REQ_CREDIT_BUREAU_DAY_isnull": 33244,
+    "AMT_REQ_CREDIT_BUREAU_WEEK_isnull": 33244,
+    "AMT_REQ_CREDIT_BUREAU_MON_isnull": 33244,
+    "AMT_REQ_CREDIT_BUREAU_QRT_isnull": 33244,
+    "AMT_REQ_CREDIT_BUREAU_YEAR_isnull": 33244
+  }
+}

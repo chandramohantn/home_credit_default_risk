@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-06-19T14:57:46Z",
+  "steps": [
+    {
+      "step": "cleaner",
+      "input_columns": 121,
+      "output_columns": 121,
+      "elapsed_seconds": 2.532073974609375
+    },
+    {
+      "step": "missing",
+      "input_columns": 121,
+      "output_columns": 188,
+      "elapsed_seconds": 2.430053472518921
+    },
+    {
+      "step": "rare_categories",
+      "input_columns": 188,
+      "output_columns": 188,
+      "elapsed_seconds": 0.5299158096313477
+    },
+    {
+      "step": "encoder",
+      "input_columns": 188,
+      "output_columns": 188,
+      "elapsed_seconds": 2.7615280151367188
+    },
+    {
+      "step": "outliers",
+      "input_columns": 188,
+      "output_columns": 188,
+      "elapsed_seconds": 2.180013656616211
+    },
+    {
+      "step": "transformations",
+      "input_columns": 188,
+      "output_columns": 188,
+      "elapsed_seconds": 0.3481595516204834
+    },
+    {
+      "step": "scaler",
+      "input_columns": 188,
+      "output_columns": 188,
+      "elapsed_seconds": 2.6308703422546387
+    }
+  ],
+  "input_shape": [
+    246008,
+    121
+  ],
+  "output_shape": [
+    246008,
+    188
+  ],
+  "leakage_analysis": {
+    "id_like_columns": [
+      "SK_ID_CURR"
+    ],
+    "highly_correlated_columns": {},
+    "near_constant_columns": []
+  }
+}

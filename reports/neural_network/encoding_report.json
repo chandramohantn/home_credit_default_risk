@@ -1,0 +1,98 @@
+{
+  "NAME_CONTRACT_TYPE": {
+    "strategy": "target",
+    "output_columns": [
+      "NAME_CONTRACT_TYPE"
+    ]
+  },
+  "CODE_GENDER": {
+    "strategy": "target",
+    "output_columns": [
+      "CODE_GENDER"
+    ]
+  },
+  "FLAG_OWN_CAR": {
+    "strategy": "target",
+    "output_columns": [
+      "FLAG_OWN_CAR"
+    ]
+  },
+  "FLAG_OWN_REALTY": {
+    "strategy": "target",
+    "output_columns": [
+      "FLAG_OWN_REALTY"
+    ]
+  },
+  "NAME_TYPE_SUITE": {
+    "strategy": "target",
+    "output_columns": [
+      "NAME_TYPE_SUITE"
+    ]
+  },
+  "NAME_INCOME_TYPE": {
+    "strategy": "target",
+    "output_columns": [
+      "NAME_INCOME_TYPE"
+    ]
+  },
+  "NAME_EDUCATION_TYPE": {
+    "strategy": "target",
+    "output_columns": [
+      "NAME_EDUCATION_TYPE"
+    ]
+  },
+  "NAME_FAMILY_STATUS": {
+    "strategy": "target",
+    "output_columns": [
+      "NAME_FAMILY_STATUS"
+    ]
+  },
+  "NAME_HOUSING_TYPE": {
+    "strategy": "target",
+    "output_columns": [
+      "NAME_HOUSING_TYPE"
+    ]
+  },
+  "OCCUPATION_TYPE": {
+    "strategy": "target",
+    "output_columns": [
+      "OCCUPATION_TYPE"
+    ]
+  },
+  "WEEKDAY_APPR_PROCESS_START": {
+    "strategy": "target",
+    "output_columns": [
+      "WEEKDAY_APPR_PROCESS_START"
+    ]
+  },
+  "ORGANIZATION_TYPE": {
+    "strategy": "target",
+    "output_columns": [
+      "ORGANIZATION_TYPE"
+    ]
+  },
+  "FONDKAPREMONT_MODE": {
+    "strategy": "target",
+    "output_columns": [
+      "FONDKAPREMONT_MODE"
+    ]
+  },
+  "HOUSETYPE_MODE": {
+    "strategy": "target",
+    "output_columns": [
+      "HOUSETYPE_MODE"
+    ]
+  },
+  "WALLSMATERIAL_MODE": {
+    "strategy": "target",
+    "output_columns": [
+      "WALLSMATERIAL_MODE"
+    ]
+  },
+  "EMERGENCYSTATE_MODE": {
+    "strategy": "target",
+    "output_columns": [
+      "EMERGENCYSTATE_MODE"
+    ]
+  }
+}

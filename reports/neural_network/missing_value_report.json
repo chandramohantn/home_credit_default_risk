@@ -1,0 +1,486 @@
+{
+  "SK_ID_CURR": {
+    "strategy": "median",
+    "value": 278392.0
+  },
+  "NAME_CONTRACT_TYPE": {
+    "strategy": "constant",
+    "value": "Unknown"
+  },
+  "CODE_GENDER": {
+    "strategy": "constant",
+    "value": "Unknown"
+  },
+  "FLAG_OWN_CAR": {
+    "strategy": "constant",
+    "value": "Unknown"
+  },
+  "FLAG_OWN_REALTY": {
+    "strategy": "constant",
+    "value": "Unknown"
+  },
+  "CNT_CHILDREN": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "AMT_INCOME_TOTAL": {
+    "strategy": "median",
+    "value": 147600.0
+  },
+  "AMT_CREDIT": {
+    "strategy": "median",
+    "value": 514777.5
+  },
+  "AMT_ANNUITY": {
+    "strategy": "median",
+    "value": 24903.0
+  },
+  "AMT_GOODS_PRICE": {
+    "strategy": "median",
+    "value": 450000.0
+  },
+  "NAME_TYPE_SUITE": {
+    "strategy": "constant",
+    "value": "Unknown"
+  },
+  "NAME_INCOME_TYPE": {
+    "strategy": "constant",
+    "value": "Unknown"
+  },
+  "NAME_EDUCATION_TYPE": {
+    "strategy": "constant",
+    "value": "Unknown"
+  },
+  "NAME_FAMILY_STATUS": {
+    "strategy": "constant",
+    "value": "Unknown"
+  },
+  "NAME_HOUSING_TYPE": {
+    "strategy": "constant",
+    "value": "Unknown"
+  },
+  "REGION_POPULATION_RELATIVE": {
+    "strategy": "median",
+    "value": 0.01885
+  },
+  "DAYS_BIRTH": {
+    "strategy": "median",
+    "value": -15744.0
+  },
+  "DAYS_EMPLOYED": {
+    "strategy": "median",
+    "value": -1215.0
+  },
+  "DAYS_REGISTRATION": {
+    "strategy": "median",
+    "value": -4505.0
+  },
+  "DAYS_ID_PUBLISH": {
+    "strategy": "median",
+    "value": -3255.0
+  },
+  "OWN_CAR_AGE": {
+    "strategy": "median",
+    "value": 9.0
+  },
+  "FLAG_MOBIL": {
+    "strategy": "median",
+    "value": 1.0
+  },
+  "FLAG_EMP_PHONE": {
+    "strategy": "median",
+    "value": 1.0
+  },
+  "FLAG_WORK_PHONE": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_CONT_MOBILE": {
+    "strategy": "median",
+    "value": 1.0
+  },
+  "FLAG_PHONE": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_EMAIL": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "OCCUPATION_TYPE": {
+    "strategy": "constant",
+    "value": "Unknown"
+  },
+  "CNT_FAM_MEMBERS": {
+    "strategy": "median",
+    "value": 2.0
+  },
+  "REGION_RATING_CLIENT": {
+    "strategy": "median",
+    "value": 2.0
+  },
+  "REGION_RATING_CLIENT_W_CITY": {
+    "strategy": "median",
+    "value": 2.0
+  },
+  "WEEKDAY_APPR_PROCESS_START": {
+    "strategy": "constant",
+    "value": "Unknown"
+  },
+  "HOUR_APPR_PROCESS_START": {
+    "strategy": "median",
+    "value": 12.0
+  },
+  "REG_REGION_NOT_LIVE_REGION": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "REG_REGION_NOT_WORK_REGION": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "LIVE_REGION_NOT_WORK_REGION": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "REG_CITY_NOT_LIVE_CITY": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "REG_CITY_NOT_WORK_CITY": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "LIVE_CITY_NOT_WORK_CITY": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "ORGANIZATION_TYPE": {
+    "strategy": "constant",
+    "value": "Unknown"
+  },
+  "EXT_SOURCE_1": {
+    "strategy": "median",
+    "value": 0.5054455334342673
+  },
+  "EXT_SOURCE_2": {
+    "strategy": "median",
+    "value": 0.5659130796679341
+  },
+  "EXT_SOURCE_3": {
+    "strategy": "median",
+    "value": 0.5352762504724826
+  },
+  "APARTMENTS_AVG": {
+    "strategy": "median",
+    "value": 0.0876
+  },
+  "BASEMENTAREA_AVG": {
+    "strategy": "median",
+    "value": 0.0764
+  },
+  "YEARS_BEGINEXPLUATATION_AVG": {
+    "strategy": "median",
+    "value": 0.9816
+  },
+  "YEARS_BUILD_AVG": {
+    "strategy": "median",
+    "value": 0.7552
+  },
+  "COMMONAREA_AVG": {
+    "strategy": "median",
+    "value": 0.0211
+  },
+  "ELEVATORS_AVG": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "ENTRANCES_AVG": {
+    "strategy": "median",
+    "value": 0.1379
+  },
+  "FLOORSMAX_AVG": {
+    "strategy": "median",
+    "value": 0.1667
+  },
+  "FLOORSMIN_AVG": {
+    "strategy": "median",
+    "value": 0.2083
+  },
+  "LANDAREA_AVG": {
+    "strategy": "median",
+    "value": 0.0482
+  },
+  "LIVINGAPARTMENTS_AVG": {
+    "strategy": "median",
+    "value": 0.0756
+  },
+  "LIVINGAREA_AVG": {
+    "strategy": "median",
+    "value": 0.0744
+  },
+  "NONLIVINGAPARTMENTS_AVG": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "NONLIVINGAREA_AVG": {
+    "strategy": "median",
+    "value": 0.0036
+  },
+  "APARTMENTS_MODE": {
+    "strategy": "median",
+    "value": 0.084
+  },
+  "BASEMENTAREA_MODE": {
+    "strategy": "median",
+    "value": 0.0746
+  },
+  "YEARS_BEGINEXPLUATATION_MODE": {
+    "strategy": "median",
+    "value": 0.9816
+  },
+  "YEARS_BUILD_MODE": {
+    "strategy": "median",
+    "value": 0.7648
+  },
+  "COMMONAREA_MODE": {
+    "strategy": "median",
+    "value": 0.0191
+  },
+  "ELEVATORS_MODE": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "ENTRANCES_MODE": {
+    "strategy": "median",
+    "value": 0.1379
+  },
+  "FLOORSMAX_MODE": {
+    "strategy": "median",
+    "value": 0.1667
+  },
+  "FLOORSMIN_MODE": {
+    "strategy": "median",
+    "value": 0.2083
+  },
+  "LANDAREA_MODE": {
+    "strategy": "median",
+    "value": 0.0459
+  },
+  "LIVINGAPARTMENTS_MODE": {
+    "strategy": "median",
+    "value": 0.0771
+  },
+  "LIVINGAREA_MODE": {
+    "strategy": "median",
+    "value": 0.0731
+  },
+  "NONLIVINGAPARTMENTS_MODE": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "NONLIVINGAREA_MODE": {
+    "strategy": "median",
+    "value": 0.0011
+  },
+  "APARTMENTS_MEDI": {
+    "strategy": "median",
+    "value": 0.0874
+  },
+  "BASEMENTAREA_MEDI": {
+    "strategy": "median",
+    "value": 0.0759
+  },
+  "YEARS_BEGINEXPLUATATION_MEDI": {
+    "strategy": "median",
+    "value": 0.9816
+  },
+  "YEARS_BUILD_MEDI": {
+    "strategy": "median",
+    "value": 0.7585
+  },
+  "COMMONAREA_MEDI": {
+    "strategy": "median",
+    "value": 0.0209
+  },
+  "ELEVATORS_MEDI": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "ENTRANCES_MEDI": {
+    "strategy": "median",
+    "value": 0.1379
+  },
+  "FLOORSMAX_MEDI": {
+    "strategy": "median",
+    "value": 0.1667
+  },
+  "FLOORSMIN_MEDI": {
+    "strategy": "median",
+    "value": 0.2083
+  },
+  "LANDAREA_MEDI": {
+    "strategy": "median",
+    "value": 0.0487
+  },
+  "LIVINGAPARTMENTS_MEDI": {
+    "strategy": "median",
+    "value": 0.0761
+  },
+  "LIVINGAREA_MEDI": {
+    "strategy": "median",
+    "value": 0.0748
+  },
+  "NONLIVINGAPARTMENTS_MEDI": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "NONLIVINGAREA_MEDI": {
+    "strategy": "median",
+    "value": 0.0031
+  },
+  "FONDKAPREMONT_MODE": {
+    "strategy": "constant",
+    "value": "Unknown"
+  },
+  "HOUSETYPE_MODE": {
+    "strategy": "constant",
+    "value": "Unknown"
+  },
+  "TOTALAREA_MODE": {
+    "strategy": "median",
+    "value": 0.0688
+  },
+  "WALLSMATERIAL_MODE": {
+    "strategy": "constant",
+    "value": "Unknown"
+  },
+  "EMERGENCYSTATE_MODE": {
+    "strategy": "constant",
+    "value": "Unknown"
+  },
+  "OBS_30_CNT_SOCIAL_CIRCLE": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "DEF_30_CNT_SOCIAL_CIRCLE": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "OBS_60_CNT_SOCIAL_CIRCLE": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "DEF_60_CNT_SOCIAL_CIRCLE": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "DAYS_LAST_PHONE_CHANGE": {
+    "strategy": "median",
+    "value": -757.0
+  },
+  "FLAG_DOCUMENT_2": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_3": {
+    "strategy": "median",
+    "value": 1.0
+  },
+  "FLAG_DOCUMENT_4": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_5": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_6": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_7": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_8": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_9": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_10": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_11": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_12": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_13": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_14": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_15": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_16": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_17": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_18": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_19": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_20": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "FLAG_DOCUMENT_21": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "AMT_REQ_CREDIT_BUREAU_HOUR": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "AMT_REQ_CREDIT_BUREAU_DAY": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "AMT_REQ_CREDIT_BUREAU_WEEK": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "AMT_REQ_CREDIT_BUREAU_MON": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "AMT_REQ_CREDIT_BUREAU_QRT": {
+    "strategy": "median",
+    "value": 0.0
+  },
+  "AMT_REQ_CREDIT_BUREAU_YEAR": {
+    "strategy": "median",
+    "value": 1.0
+  }
+}
