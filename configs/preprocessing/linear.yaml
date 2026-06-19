@@ -1,0 +1,32 @@
+# Configuration for Linear Preprocessing Pipeline
+# Used for Logistic Regression and other linear models.
+
+pipeline:
+  schema_validation: true
+  drop_duplicates: true
+  type_standardization: true
+  
+  datetime_cols: []
+
+  imputation:
+    numerical:
+      strategy: "median"
+      add_indicators: true
+    categorical:
+      strategy: "constant"
+      fill_value: "Unknown"
+
+  rare_categories:
+    threshold_pct: 0.01
+    fill_value: "OTHER"
+
+  encoding:
+    strategy: "one_hot"  # One-hot encoding is preferred for linear models
+
+  outliers:
+    strategy: "clip"
+    method: "iqr"
+    threshold: 1.5
+
+  scaling:
+    strategy: "robust"  # RobustScaler to center and scale numerical features

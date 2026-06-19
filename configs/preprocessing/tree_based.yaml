@@ -1,0 +1,32 @@
+# Configuration for Tree-Based Preprocessing Pipeline
+# Used for XGBoost, LightGBM, and CatBoost models.
+
+pipeline:
+  schema_validation: true
+  drop_duplicates: true
+  type_standardization: true
+  
+  datetime_cols: []
+
+  imputation:
+    numerical:
+      strategy: "median"
+      add_indicators: true
+    categorical:
+      strategy: "constant"
+      fill_value: "Unknown"
+
+  rare_categories:
+    threshold_pct: 0.01
+    fill_value: "OTHER"
+
+  encoding:
+    strategy: "target"  # Use out-of-fold target encoding
+    target_cv_folds: 5
+    target_smoothing: 10.0
+
+  outliers:
+    strategy: "none"  # Tree models are robust to outliers
+
+  scaling:
+    strategy: "none"  # Tree models don't require scaling

@@ -1,0 +1,39 @@
+# Configuration for Neural Network Preprocessing Pipeline
+# Used for MLP and deep learning models.
+
+pipeline:
+  schema_validation: true
+  drop_duplicates: true
+  type_standardization: true
+  
+  datetime_cols: []
+
+  imputation:
+    numerical:
+      strategy: "median"
+      add_indicators: true
+    categorical:
+      strategy: "constant"
+      fill_value: "Unknown"
+
+  rare_categories:
+    threshold_pct: 0.01
+    fill_value: "OTHER"
+
+  encoding:
+    strategy: "target"  # Converts high cardinality categoricals to robust numeric scores
+    target_cv_folds: 5
+    target_smoothing: 10.0
+
+  outliers:
+    strategy: "clip"
+    method: "iqr"
+    threshold: 1.5
+
+  transformations:
+    AMT_INCOME_TOTAL: "log1p"
+    AMT_CREDIT: "log1p"
+    AMT_ANNUITY: "log1p"
+
+  scaling:
+    strategy: "quantile"  # QuantileTransformer to map features to a normal distribution
