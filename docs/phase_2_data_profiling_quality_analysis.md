@@ -1,5 +1,88 @@
 # Data Profiling & Quality Analysis Checklist
 
+## Implemented class diagram
+
+```mermaid
+classDiagram
+    class DataProfiler {
+        +target_column: optional target
+        +run(df) ProfilingResult
+    }
+
+    class DatasetStatistics {
+        +summarize(df) DatasetStats
+    }
+
+    class MissingValueAnalyzer {
+        +analyze(df, threshold) MissingValueReport
+    }
+
+    class DuplicateAnalyzer {
+        +analyze(df) DuplicateReport
+    }
+
+    class ConstantFeatureAnalyzer {
+        +analyze(df, near_constant_threshold) ConstantFeatureReport
+    }
+
+    class CardinalityAnalyzer {
+        +analyze(df, categorical_only) CardinalityReport
+    }
+
+    class TargetAnalyzer {
+        +analyze(df, target_column) TargetAnalysisReport
+    }
+
+    class LeakageAnalyzer {
+        +analyze(df, target_column, corr_threshold, unique_ratio_threshold) LeakageReport
+    }
+
+    class ProfilingResult {
+        +dataset_stats: DatasetStats
+        +missing_values: MissingValueReport
+        +duplicates: DuplicateReport
+        +constant_features: ConstantFeatureReport
+        +cardinality: CardinalityReport
+        +target_analysis: TargetAnalysisReport
+        +leakage: LeakageReport
+    }
+
+    class ReportGenerator {
+        +save_results(results) void
+        +save_figure(fig, filename) void
+    }
+
+    class MissingValueVisualizer {
+        +plot_missing_percentages(percentages, top_n) Figure
+    }
+
+    class DatasetStats
+    class MissingValueReport
+    class DuplicateReport
+    class ConstantFeatureReport
+    class CardinalityReport
+    class TargetAnalysisReport
+    class LeakageReport
+
+    DataProfiler ..> DatasetStatistics : summarize()
+    DataProfiler ..> MissingValueAnalyzer : analyze()
+    DataProfiler ..> DuplicateAnalyzer : analyze()
+    DataProfiler ..> ConstantFeatureAnalyzer : analyze()
+    DataProfiler ..> CardinalityAnalyzer : analyze()
+    DataProfiler ..> TargetAnalyzer : analyze()
+    DataProfiler ..> LeakageAnalyzer : analyze()
+    DataProfiler --> ProfilingResult : returns
+    ProfilingResult *-- DatasetStats
+    ProfilingResult *-- MissingValueReport
+    ProfilingResult *-- DuplicateReport
+    ProfilingResult *-- ConstantFeatureReport
+    ProfilingResult *-- CardinalityReport
+    ProfilingResult o-- TargetAnalysisReport
+    ProfilingResult o-- LeakageReport
+    ReportGenerator ..> ProfilingResult : persists
+    MissingValueVisualizer ..> MissingValueReport : plots
+```
+
 ## Dataset Understanding
 - Load dataset
 - Dataset dimensions

@@ -1,5 +1,79 @@
 # Phase 4 Goal
 
+## Implemented class diagram
+
+```mermaid
+classDiagram
+    class PreprocessingPipeline {
+        +config: pipeline config
+        +reports_dir: Path
+        +target_column: str
+        +steps_: configured steps
+        +fit(X, y) PreprocessingPipeline
+        +transform(X) DataFrame
+        +fit_transform(X, y) DataFrame
+        +get_feature_names_out() feature names
+    }
+
+    class SchemaValidator {
+        +fit(df) SchemaValidator
+        +validate(df, is_train) validation report
+    }
+
+    class LeakageValidator {
+        +analyze(df) leakage report
+    }
+
+    class MetadataTracker {
+        +log_step(step_name, input_cols, output_cols, elapsed_time) void
+        +log_shapes(input_shape, output_shape) void
+        +record_missing_values(report) void
+        +record_outliers(report) void
+        +record_encodings(report) void
+        +record_scaling(report) void
+        +record_feature_metadata(metadata) void
+        +save_all_reports() void
+    }
+
+    class BaseTransformer {
+        +fitted_: bool
+        +fit(X, y) BaseTransformer
+        +transform(X)
+        +get_feature_names_out(input_features) feature names
+    }
+
+    class DataCleaner
+    class MissingValueTransformer
+    class RareCategoryTransformer
+    class EncodingTransformer
+    class OutlierTransformer
+    class FeatureTransformer
+    class FeatureScaler
+
+    BaseTransformer <|-- DataCleaner
+    BaseTransformer <|-- MissingValueTransformer
+    BaseTransformer <|-- RareCategoryTransformer
+    BaseTransformer <|-- EncodingTransformer
+    BaseTransformer <|-- OutlierTransformer
+    BaseTransformer <|-- FeatureTransformer
+    BaseTransformer <|-- FeatureScaler
+
+    PreprocessingPipeline *-- SchemaValidator
+    PreprocessingPipeline *-- LeakageValidator
+    PreprocessingPipeline *-- MetadataTracker
+    PreprocessingPipeline o-- DataCleaner : optional step
+    PreprocessingPipeline o-- MissingValueTransformer : optional step
+    PreprocessingPipeline o-- RareCategoryTransformer : optional step
+    PreprocessingPipeline o-- EncodingTransformer : optional step
+    PreprocessingPipeline o-- OutlierTransformer : optional step
+    PreprocessingPipeline o-- FeatureTransformer : optional step
+    PreprocessingPipeline o-- FeatureScaler : optional step
+```
+
+The concrete transformer sequence is assembled from the YAML configuration through
+`src/preprocessing/registry.py`, so the same pipeline class can build linear,
+tree-based, and neural-network preprocessing variants without changing code.
+
 For a reusable ML experimentation framework, Phase 4 should focus on building a **generic preprocessing pipeline framework** rather than just preprocessing the Home Credit dataset.
 
 Convert raw features into model-ready features while ensuring:

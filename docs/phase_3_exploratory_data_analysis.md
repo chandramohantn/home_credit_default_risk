@@ -1,5 +1,92 @@
 # Phase 3 Checklist
 
+## Implemented class diagram
+
+```mermaid
+classDiagram
+    class EDAOrchestrator {
+        +output_dir: Path
+        +target_column: str
+        +run(df, num_features, cat_features) void
+        -save_csv_deliverables() void
+        -generate_summary_report() void
+    }
+
+    class TargetAnalyzer {
+        +analyze(df, target_column) TargetEDAResult
+    }
+
+    class UnivariateAnalyzer {
+        +analyze_numeric(df, columns) Dict
+        +analyze_categorical(df, columns, rare_threshold) Dict
+    }
+
+    class BivariateAnalyzer {
+        +analyze_numeric(df, target_column, columns) Dict
+        +analyze_categorical(df, target_column, columns) Dict
+    }
+
+    class CorrelationAnalyzer {
+        +analyze_correlations(df, method) DataFrame
+        +calculate_vif(df, columns) DataFrame
+    }
+
+    class ImportanceAnalyzer {
+        +calculate_mutual_info(df, target_column, top_n) Series
+    }
+
+    class DimensionalityAnalyzer {
+        +run_pca(df, n_components) Tuple
+        +run_umap(df, n_components)
+    }
+
+    class TargetVisualizer {
+        +plot_distribution(df, target_column) Figure
+        +plot_numeric_vs_target(df, feature, target_column) Figure
+        +plot_categorical_vs_target(df, feature, target_column, top_n) Figure
+    }
+
+    class DistributionVisualizer {
+        +plot_numerical(df, feature) Figure
+        +plot_categorical(df, feature, top_n) Figure
+    }
+
+    class CorrelationVisualizer {
+        +plot_heatmap(df, columns, top_n) Figure
+    }
+
+    class ImportanceVisualizer {
+        +plot_importance(importance_scores, title) Figure
+    }
+
+    class DimensionalityVisualizer {
+        +plot_projection(X_proj, target, title) Figure
+    }
+
+    class TargetEDAResult
+    class NumericalUnivariateStats
+    class CategoricalUnivariateStats
+    class NumericBivariateStats
+    class CategoricalBivariateStats
+
+    EDAOrchestrator ..> TargetAnalyzer : analyze()
+    EDAOrchestrator ..> UnivariateAnalyzer : analyze_numeric()
+    EDAOrchestrator ..> BivariateAnalyzer : analyze numeric and categorical
+    EDAOrchestrator ..> CorrelationAnalyzer : analyze_correlations()
+    EDAOrchestrator ..> ImportanceAnalyzer : calculate_mutual_info()
+    EDAOrchestrator ..> DimensionalityAnalyzer : run_pca()
+    EDAOrchestrator ..> TargetVisualizer : saves target plots
+    EDAOrchestrator ..> DistributionVisualizer : saves distribution plots
+    EDAOrchestrator ..> CorrelationVisualizer : saves heatmaps
+    EDAOrchestrator ..> ImportanceVisualizer : saves MI plots
+    EDAOrchestrator ..> DimensionalityVisualizer : saves PCA plots
+    TargetAnalyzer --> TargetEDAResult
+    UnivariateAnalyzer --> NumericalUnivariateStats
+    UnivariateAnalyzer --> CategoricalUnivariateStats
+    BivariateAnalyzer --> NumericBivariateStats
+    BivariateAnalyzer --> CategoricalBivariateStats
+```
+
 ---
 
 ## Section 1 — Target Analysis
