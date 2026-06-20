@@ -23,7 +23,12 @@ class SchemaValidator:
         columns_ (list of str): Stored list of expected columns.
     """
     
-    def __init__(self, target_column: str = None, key_column: str = None):
+    def __init__(
+        self,
+        target_column: str = None,
+        key_column: str = None,
+        allow_extra_columns: bool = True,
+    ):
         """Initializes the SchemaValidator.
 
         Args:
@@ -32,6 +37,7 @@ class SchemaValidator:
         """
         self.target_column = target_column
         self.key_column = key_column
+        self.allow_extra_columns = allow_extra_columns
         self.expected_schema_: Dict[str, str] = {}
         self.columns_: List[str] = []
 
@@ -141,6 +147,7 @@ class SchemaValidator:
         # Evaluate final conforms check
         is_valid = (
             len(report["missing_columns"]) == 0 and
+            (self.allow_extra_columns or len(report["extra_columns"]) == 0) and
             len(report["type_mismatches"]) == 0 and
             len(report["duplicate_columns"]) == 0 and
             len(report["key_violations"]) == 0 and

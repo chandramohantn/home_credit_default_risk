@@ -27,7 +27,7 @@ class MetadataTracker:
         feature_metadata_ (dict): Master list of column names, validation outputs, and dtypes.
     """
     
-    def __init__(self, output_dir: Path):
+    def __init__(self, output_dir: Path, version: str = "1.0"):
         """Initializes the MetadataTracker and creates target output folders.
 
         Args:
@@ -35,9 +35,11 @@ class MetadataTracker:
         """
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.version = version
         
         # Instantiate master runtime logging dict
         self.run_metadata_: Dict[str, Any] = {
+            "version": version,
             "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "steps": [],
             "input_shape": None,
@@ -47,6 +49,7 @@ class MetadataTracker:
         self.outlier_report_: Dict[str, Any] = {}
         self.encoding_report_: Dict[str, Any] = {}
         self.scaling_report_: Dict[str, Any] = {}
+        self.transformation_report_: Dict[str, Any] = {}
         self.feature_metadata_: Dict[str, Any] = {}
 
     def log_step(self, step_name: str, input_cols: int, output_cols: int, elapsed_time: float):
@@ -115,20 +118,49 @@ class MetadataTracker:
         """
         self.feature_metadata_ = metadata
 
+    def record_transformations(self, report: Dict[str, Any]):
+        """Records feature transformation details and fitted parameters."""
+
+        self.transformation_report_ = report
+
+    def record_report(self, name: str, payload: Dict[str, Any]):
+        """Records a report payload under a known report name."""
+
+        if name == "missing_values":
+            self.record_missing_values(payload)
+        elif name == "outliers":
+            self.record_outliers(payload)
+        elif name == "encodings":
+            self.record_encodings(payload)
+        elif name == "scaling":
+            self.record_scaling(payload)
+        elif name == "transformations":
+            self.record_transformations(payload)
+        elif name == "feature_metadata":
+            self.record_feature_metadata(payload)
+        else:
+            self.run_metadata_.setdefault("extra_reports", {})[name] = payload
+
     def save_all_reports(self):
         """Writes all recorded preprocessing reports to designated JSON files.
 
         Why: Ensures that training runs output separate diagnostic reports 
         that can be archived, versioned, or loaded to audit inference tasks.
         """
+        def add_version(data: Dict[str, Any]) -> Dict[str, Any]:
+            if not isinstance(data, dict):
+                return {"version": self.version, "data": data}
+            return {"version": self.version, **data} if "version" not in data else data
+
         def save_json(data: Dict[str, Any], filename: str):
             path = self.output_dir / filename
             with open(path, "w") as f:
-                json.dump(data, f, indent=2)
+                json.dump(add_version(data), f, indent=2)
 
         save_json(self.run_metadata_, "preprocessing_report.json")
         save_json(self.missing_report_, "missing_value_report.json")
         save_json(self.outlier_report_, "outlier_report.json")
         save_json(self.encoding_report_, "encoding_report.json")
         save_json(self.scaling_report_, "scaling_report.json")
+        save_json(self.transformation_report_, "transformation_report.json")
         save_json(self.feature_metadata_, "feature_metadata.json")

@@ -90,6 +90,11 @@ The concrete transformer sequence is assembled from the YAML configuration throu
 `src/preprocessing/registry.py`, so the same pipeline class can build linear,
 tree-based, and neural-network preprocessing variants without changing code.
 
+The current implementation also supports config-driven `available_components` and
+ordered `steps`, so the pipeline is no longer locked to a fixed internal sequence:
+you can choose which components are available and which configured steps are
+assembled for a specific experiment.
+
 For a reusable ML experimentation framework, Phase 4 should focus on building a **generic preprocessing pipeline framework** rather than just preprocessing the Home Credit dataset.
 
 Convert raw features into model-ready features while ensuring:

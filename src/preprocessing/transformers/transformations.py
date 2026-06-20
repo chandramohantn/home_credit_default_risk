@@ -15,6 +15,7 @@ import numpy as np
 from typing import Dict, List, Optional, Any
 from scipy.stats import boxcox, yeojohnson
 from src.preprocessing.transformers.base import BaseTransformer
+from src.preprocessing.strategies import TRANSFORMATION_REGISTRY
 
 class FeatureTransformer(BaseTransformer):
     """Applies mathematical transformations to numerical features.
@@ -40,6 +41,7 @@ class FeatureTransformer(BaseTransformer):
 
         # Fitted parameters
         self.fitted_params_: Dict[str, Any] = {}
+        self.transformation_report_: Dict[str, Any] = {}
         self.feature_names_in_: List[str] = []
         self.feature_names_out_: List[str] = []
 
@@ -64,10 +66,13 @@ class FeatureTransformer(BaseTransformer):
 
         self.feature_names_in_ = list(X.columns)
         self.fitted_params_ = {}
+        self.transformation_report_ = {}
 
         for col, transform_type in self.transformations.items():
             if col not in X.columns:
                 continue
+            if transform_type not in TRANSFORMATION_REGISTRY:
+                raise ValueError(f"Unknown transformation strategy: {transform_type}")
 
             series = X[col].dropna()
             if series.empty:
@@ -78,16 +83,32 @@ class FeatureTransformer(BaseTransformer):
                 if (series <= 0).any():
                     _, lmbda = yeojohnson(series)
                     self.fitted_params_[col] = {"type": "yeo_johnson", "lambda": lmbda}
+                    self.transformation_report_[col] = {
+                        "operation": "yeo_johnson",
+                        "parameters": {"lambda": float(lmbda)},
+                    }
                 else:
                     _, lmbda = boxcox(series)
                     self.fitted_params_[col] = {"type": "box_cox", "lambda": lmbda}
+                    self.transformation_report_[col] = {
+                        "operation": "box_cox",
+                        "parameters": {"lambda": float(lmbda)},
+                    }
             elif transform_type == "yeo_johnson":
                 # Why: Yeo-Johnson can handle negative/zero inputs natively.
                 _, lmbda = yeojohnson(series)
                 self.fitted_params_[col] = {"type": "yeo_johnson", "lambda": lmbda}
+                self.transformation_report_[col] = {
+                    "operation": "yeo_johnson",
+                    "parameters": {"lambda": float(lmbda)},
+                }
             elif transform_type in ["log", "log1p", "sqrt"]:
                 # Static transformations (no parameter fitting required)
                 self.fitted_params_[col] = {"type": transform_type}
+                self.transformation_report_[col] = {
+                    "operation": transform_type,
+                    "parameters": {},
+                }
 
         self.feature_names_out_ = self.feature_names_in_
         self.fitted_ = True
@@ -152,3 +173,8 @@ class FeatureTransformer(BaseTransformer):
             list of str: Feature names.
         """
         return self.feature_names_out_
+
+    def get_reports(self) -> Dict[str, Any]:
+        """Returns transformation metadata for pipeline-level reporting."""
+
+        return {"transformations": self.transformation_report_}

@@ -6,6 +6,7 @@ encoding strategies. Supported encodings:
 - Ordinal encoding (standard for tree models).
 - Frequency encoding (replaces labels with their frequencies).
 - Target encoding (replaces category with average target probabilities).
+- CatBoost-style ordered encoding (reduces leakage using running target statistics).
 
 Critical Requirement: Target encoding on the training set introduces massive target 
 leakage if calculated naively. To prevent this, our fit_transform implementation uses 
@@ -19,6 +20,7 @@ from typing import List, Dict, Union, Any, Optional
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import KFold
 from src.preprocessing.transformers.base import BaseTransformer
+from src.preprocessing.strategies import ENCODER_REGISTRY
 
 class EncodingTransformer(BaseTransformer):
     """Encodes categorical levels into model-ready numerical columns.
@@ -26,7 +28,7 @@ class EncodingTransformer(BaseTransformer):
     Supports a global default strategy or column-specific configuration overrides.
 
     Attributes:
-        default_strategy (str): Default strategy name ('one_hot', 'ordinal', 'target', 'frequency').
+        default_strategy (str): Default strategy name ('one_hot', 'ordinal', 'target', 'frequency', 'catboost').
         column_strategies (dict): Specific overrides per column.
         target_cv_folds (int): Number of folds for out-of-fold target encoding calculations.
         target_smoothing (float): Smoothing parameter (prior weight) for target encoding.
@@ -41,6 +43,8 @@ class EncodingTransformer(BaseTransformer):
                  column_strategies: Optional[Dict[str, str]] = None,
                  target_cv_folds: int = 5,
                  target_smoothing: float = 10.0,
+                 catboost_prior: float = 10.0,
+                 random_state: int = 42,
                  handle_unknown: str = "ignore"):
         """Initializes the EncodingTransformer.
 
@@ -56,6 +60,8 @@ class EncodingTransformer(BaseTransformer):
         self.column_strategies = column_strategies or {}
         self.target_cv_folds = target_cv_folds
         self.target_smoothing = target_smoothing
+        self.catboost_prior = catboost_prior
+        self.random_state = random_state
         self.handle_unknown = handle_unknown
 
         # Fitted parameters
@@ -66,7 +72,7 @@ class EncodingTransformer(BaseTransformer):
     def fit(self, X: pd.DataFrame, y: Optional[pd.Series] = None):
         """Learns categorical mappings and target ratios for each column.
 
-        Note: When y is not provided during fitting, target encoding defaults 
+        Note: When y is not provided during fitting, target-derived encoders default 
         to standard ordinal encoding to prevent failures.
 
         Args:
@@ -97,6 +103,8 @@ class EncodingTransformer(BaseTransformer):
                 continue
 
             strategy = self.column_strategies.get(col, self.default_strategy)
+            if strategy not in ENCODER_REGISTRY:
+                raise ValueError(f"Unknown encoding strategy: {strategy}")
             
             if strategy == "one_hot":
                 # Why: Standard OneHotEncoder creates binary indicators per category. 
@@ -175,6 +183,37 @@ class EncodingTransformer(BaseTransformer):
                 }
                 self.feature_names_out_.append(col)
 
+            elif strategy == "catboost":
+                if y is None:
+                    categories = list(X[col].dropna().unique())
+                    mapping = {cat: idx for idx, cat in enumerate(categories)}
+                    self.encoding_info_[col] = {
+                        "strategy": "catboost_fallback",
+                        "mapping": mapping,
+                        "output_columns": [col]
+                    }
+                    self.feature_names_out_.append(col)
+                    continue
+
+                global_prior = float(y.mean())
+                col_y_df = pd.DataFrame({col: X[col], "y": y})
+                stats = col_y_df.groupby(col, observed=True)["y"].agg(["count", "mean"])
+
+                smoothed_mapping = {}
+                for category, row in stats.iterrows():
+                    count = row["count"]
+                    mean = row["mean"]
+                    smoothed = (count * mean + self.catboost_prior * global_prior) / (count + self.catboost_prior)
+                    smoothed_mapping[str(category)] = float(smoothed)
+
+                self.encoding_info_[col] = {
+                    "strategy": "catboost",
+                    "mapping": smoothed_mapping,
+                    "global_prior": global_prior,
+                    "output_columns": [col]
+                }
+                self.feature_names_out_.append(col)
+
             else:
                 raise ValueError(f"Unknown encoding strategy: {strategy}")
 
@@ -230,7 +269,7 @@ class EncodingTransformer(BaseTransformer):
                 encoded_series = df[col].astype(str).map(mapping).fillna(default_val)
                 output_dfs.append(encoded_series.to_frame(name=col))
 
-            elif strategy == "target" or strategy == "target_fallback":
+            elif strategy in {"target", "target_fallback", "catboost", "catboost_fallback"}:
                 mapping = info["mapping"]
                 prior = info.get("global_prior", 0.0)
                 encoded_series = df[col].astype(str).map(mapping).fillna(prior)
@@ -262,11 +301,14 @@ class EncodingTransformer(BaseTransformer):
             return self.transform(X)
 
         # 2. Check if target encoding is active
-        has_target_encoding = any(
-            info["strategy"] == "target" for info in self.encoding_info_.values()
-        )
+        oof_strategies = {"target", "catboost"}
+        encoded_with_oof = {
+            col: info["strategy"]
+            for col, info in self.encoding_info_.items()
+            if info["strategy"] in oof_strategies
+        }
 
-        if not has_target_encoding:
+        if not encoded_with_oof:
             return self.transform(X)
 
         # 3. Perform Out-of-Fold calculation
@@ -275,7 +317,7 @@ class EncodingTransformer(BaseTransformer):
         oof_values = {
             col: np.zeros(len(X)) 
             for col, info in self.encoding_info_.items() 
-            if info["strategy"] == "target"
+            if info["strategy"] in oof_strategies
         }
 
         for train_idx, val_idx in kf.split(X, y):
@@ -284,19 +326,35 @@ class EncodingTransformer(BaseTransformer):
             global_prior_fold = float(y_train_fold.mean())
 
             for col, oof_arr in oof_values.items():
-                # Fit target mappings on this fold's training split
-                col_y_df = pd.DataFrame({col: X_train_fold[col], "y": y_train_fold})
-                stats = col_y_df.groupby(col, observed=True)["y"].agg(["count", "mean"])
-                
-                fold_mapping = {}
-                for category, row in stats.iterrows():
-                    count = row["count"]
-                    mean = row["mean"]
-                    smoothed = (count * mean + self.target_smoothing * global_prior_fold) / (count + self.target_smoothing)
-                    fold_mapping[str(category)] = float(smoothed)
+                strategy = self.encoding_info_[col]["strategy"]
+                if strategy == "target":
+                    col_y_df = pd.DataFrame({col: X_train_fold[col], "y": y_train_fold})
+                    stats = col_y_df.groupby(col, observed=True)["y"].agg(["count", "mean"])
 
-                # Transform this fold's validation split
-                oof_arr[val_idx] = X_val_fold[col].astype(str).map(fold_mapping).fillna(global_prior_fold).values
+                    fold_mapping = {}
+                    for category, row in stats.iterrows():
+                        count = row["count"]
+                        mean = row["mean"]
+                        smoothed = (count * mean + self.target_smoothing * global_prior_fold) / (count + self.target_smoothing)
+                        fold_mapping[str(category)] = float(smoothed)
+
+                    oof_arr[val_idx] = X_val_fold[col].astype(str).map(fold_mapping).fillna(global_prior_fold).values
+                elif strategy == "catboost":
+                    ordered_series = self._catboost_encode_train(
+                        X_train_fold[col],
+                        y_train_fold,
+                        global_prior_fold,
+                    )
+                    fold_mapping = pd.Series(ordered_series, index=X_train_fold.index)
+                    category_means = (
+                        pd.DataFrame({"feature": X_train_fold[col].astype(str), "encoded": fold_mapping})
+                        .groupby("feature", observed=True)["encoded"]
+                        .mean()
+                        .to_dict()
+                    )
+                    oof_arr[val_idx] = (
+                        X_val_fold[col].astype(str).map(category_means).fillna(global_prior_fold).values
+                    )
 
         # Build output dataframe, inserting OOF arrays for target columns
         output_dfs = []
@@ -308,7 +366,7 @@ class EncodingTransformer(BaseTransformer):
             info = self.encoding_info_[col]
             strategy = info["strategy"]
 
-            if strategy == "target":
+            if strategy in {"target", "catboost"}:
                 oof_series = pd.Series(oof_values[col], index=X.index, name=col)
                 output_dfs.append(oof_series.to_frame())
             else:
@@ -327,3 +385,43 @@ class EncodingTransformer(BaseTransformer):
             list of str: Final list of feature names.
         """
         return self.feature_names_out_
+
+    def get_reports(self) -> Dict[str, Any]:
+        """Returns encoding metadata for pipeline-level reporting."""
+
+        return {
+            "encodings": {
+                col: {
+                    "strategy": info["strategy"],
+                    "output_columns": info["output_columns"],
+                }
+                for col, info in self.encoding_info_.items()
+            }
+        }
+
+    def _catboost_encode_train(
+        self,
+        feature: pd.Series,
+        target: pd.Series,
+        global_prior: float,
+    ) -> np.ndarray:
+        """Builds ordered target statistics for CatBoost-style training encoding."""
+
+        ordered_values = np.zeros(len(feature), dtype=float)
+        cat_sums: Dict[str, float] = {}
+        cat_counts: Dict[str, int] = {}
+        permutation = np.random.RandomState(self.random_state).permutation(len(feature))
+        feature_values = feature.astype(str).values
+        target_values = target.values
+
+        for idx in permutation:
+            category = feature_values[idx]
+            running_sum = cat_sums.get(category, 0.0)
+            running_count = cat_counts.get(category, 0)
+            ordered_values[idx] = (
+                running_sum + self.catboost_prior * global_prior
+            ) / (running_count + self.catboost_prior)
+            cat_sums[category] = running_sum + float(target_values[idx])
+            cat_counts[category] = running_count + 1
+
+        return ordered_values

@@ -1,7 +1,8 @@
 """Outlier detection and clipping transformer.
 
 This module provides the OutlierTransformer, which identifies and treats numerical 
-outliers using standard methods such as Interquartile Range (IQR), Z-Score, or Winsorization.
+outliers using standard methods such as Interquartile Range (IQR), Z-Score,
+Winsorization, or Isolation Forest scoring.
 
 Outliers can heavily bias downstream estimators, specifically linear models (Logistic 
 Regression) and Neural Networks. The OutlierTransformer calculates the clipping bounds 
@@ -12,14 +13,16 @@ during `transform` on both train and validation splits to prevent target/data le
 import pandas as pd
 import numpy as np
 from typing import List, Dict, Tuple, Optional, Any
+from sklearn.ensemble import IsolationForest
 from src.preprocessing.transformers.base import BaseTransformer
+from src.preprocessing.strategies import OUTLIER_METHOD_REGISTRY
 
 class OutlierTransformer(BaseTransformer):
     """Clips numerical values outside statistical boundaries.
 
     Attributes:
-        strategy (str): Treatment strategy ('clip' or 'none'). Default is 'clip'.
-        method (str): Detection method ('iqr', 'z_score', 'winsorize'). Defaults to 'iqr'.
+        strategy (str): Treatment strategy ('clip', 'remove', or 'none'). Default is 'clip'.
+        method (str): Detection method ('iqr', 'z_score', 'winsorize', 'isolation_forest'). Defaults to 'iqr'.
         threshold (float): Threshold multiplier for IQR (usually 1.5) or Z-score (usually 3.0).
         lower_quantile (float): Bottom quantile for Winsorization (default 0.01).
         upper_quantile (float): Top quantile for Winsorization (default 0.99).
@@ -36,6 +39,8 @@ class OutlierTransformer(BaseTransformer):
                  threshold: float = 1.5,
                  lower_quantile: float = 0.01,
                  upper_quantile: float = 0.99,
+                 contamination: float = 0.05,
+                 random_state: int = 42,
                  columns: Optional[List[str]] = None):
         """Initializes the OutlierTransformer.
 
@@ -53,6 +58,8 @@ class OutlierTransformer(BaseTransformer):
         self.threshold = threshold
         self.lower_quantile = lower_quantile
         self.upper_quantile = upper_quantile
+        self.contamination = contamination
+        self.random_state = random_state
         self.columns = columns
 
         # Fitted parameters
@@ -60,6 +67,9 @@ class OutlierTransformer(BaseTransformer):
         self.feature_names_in_: List[str] = []
         self.feature_names_out_: List[str] = []
         self.outlier_counts_: Dict[str, int] = {}
+        self.isolation_forest_: Optional[IsolationForest] = None
+        self.isolation_columns_: List[str] = []
+        self.isolation_fill_values_: Dict[str, float] = {}
 
     def fit(self, X: pd.DataFrame, y: Optional[pd.Series] = None):
         """Calculates clipping limits for numerical features.
@@ -81,6 +91,9 @@ class OutlierTransformer(BaseTransformer):
         self.feature_names_in_ = list(X.columns)
         self.limits_ = {}
         self.outlier_counts_ = {}
+        self.isolation_forest_ = None
+        self.isolation_columns_ = []
+        self.isolation_fill_values_ = {}
 
         # 1. Determine target columns to treat
         target_cols = self.columns
@@ -90,9 +103,39 @@ class OutlierTransformer(BaseTransformer):
                 if pd.api.types.is_numeric_dtype(X[col]) and not pd.api.types.is_bool_dtype(X[col])
             ]
 
+        if self.method not in OUTLIER_METHOD_REGISTRY:
+            raise ValueError(f"Unknown outlier detection method: {self.method}")
+
         # 2. Compute outlier limits
         # Why: Fitting outlier limits on training data and applying it to test/validation prevents 
         # validation set statistics from leaking back into model evaluation.
+        if self.method == "isolation_forest":
+            self.isolation_columns_ = list(target_cols)
+            if self.isolation_columns_:
+                fit_frame = X[self.isolation_columns_].copy()
+                self.isolation_fill_values_ = {
+                    col: float(fit_frame[col].median()) if fit_frame[col].notnull().any() else 0.0
+                    for col in self.isolation_columns_
+                }
+                fit_frame = fit_frame.fillna(self.isolation_fill_values_)
+                self.isolation_forest_ = IsolationForest(
+                    contamination=self.contamination,
+                    random_state=self.random_state,
+                )
+                predictions = self.isolation_forest_.fit_predict(fit_frame)
+                inlier_mask = predictions == 1
+                self.outlier_counts_["__rows__"] = int((~inlier_mask).sum())
+
+                reference_frame = fit_frame.loc[inlier_mask] if inlier_mask.any() else fit_frame
+                for col in self.isolation_columns_:
+                    self.limits_[col] = (
+                        float(reference_frame[col].quantile(self.lower_quantile)),
+                        float(reference_frame[col].quantile(self.upper_quantile)),
+                    )
+            self.feature_names_out_ = self.feature_names_in_
+            self.fitted_ = True
+            return self
+
         for col in X.columns:
             if col not in target_cols or col == "TARGET" or col == "y":
                 continue
@@ -118,8 +161,6 @@ class OutlierTransformer(BaseTransformer):
             elif self.method == "winsorize":
                 lower_limit = float(series.quantile(self.lower_quantile))
                 upper_limit = float(series.quantile(self.upper_quantile))
-            else:
-                raise ValueError(f"Unknown outlier detection method: {self.method}")
 
             self.limits_[col] = (lower_limit, upper_limit)
             
@@ -153,6 +194,8 @@ class OutlierTransformer(BaseTransformer):
             for col, (lower_limit, upper_limit) in self.limits_.items():
                 if col in df.columns:
                     df[col] = df[col].clip(lower=lower_limit, upper=upper_limit)
+        elif self.strategy == "remove":
+            return df
 
         return df
 
@@ -166,3 +209,34 @@ class OutlierTransformer(BaseTransformer):
             list of str: Feature names.
         """
         return self.feature_names_out_
+
+    def fit_transform(self, X: pd.DataFrame, y: Optional[pd.Series] = None) -> pd.DataFrame:
+        """Fits outlier limits and optionally removes outlier rows from training data only."""
+
+        self.fit(X, y)
+        if self.strategy != "remove":
+            return self.transform(X)
+
+        df = X.copy()
+        if self.method == "isolation_forest" and self.isolation_forest_ is not None:
+            fit_frame = df[self.isolation_columns_].copy().fillna(self.isolation_fill_values_)
+            keep_mask = self.isolation_forest_.predict(fit_frame) == 1
+            return df.loc[keep_mask]
+
+        keep_mask = pd.Series(True, index=df.index)
+        for col, (lower_limit, upper_limit) in self.limits_.items():
+            if col in df.columns:
+                keep_mask &= df[col].isnull() | df[col].between(lower_limit, upper_limit)
+        return df.loc[keep_mask]
+
+    def get_reports(self) -> Dict[str, Any]:
+        """Returns outlier diagnostics for pipeline-level reporting."""
+
+        return {
+            "outliers": {
+                "method": self.method,
+                "strategy": self.strategy,
+                "limits": {col: list(lim) for col, lim in self.limits_.items()},
+                "outlier_counts": self.outlier_counts_,
+            }
+        }

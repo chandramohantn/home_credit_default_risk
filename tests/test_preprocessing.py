@@ -108,6 +108,22 @@ def test_encoding_transformer(sample_data):
     assert "gender" in df_encoded.columns
     assert df_encoded["gender"].dtype in [np.float64, float]
 
+def test_catboost_encoding_transformer(sample_data):
+    df = sample_data.copy()
+    df["gender"] = df["gender"].fillna("Unknown")
+
+    encoder = EncodingTransformer(
+        default_strategy="catboost",
+        target_cv_folds=3,
+        catboost_prior=5.0,
+    )
+
+    df_encoded = encoder.fit_transform(df[["gender", "occupation"]], df["target"])
+
+    assert "gender" in df_encoded.columns
+    assert "occupation" in df_encoded.columns
+    assert df_encoded["gender"].dtype in [np.float64, float]
+
 def test_outlier_transformer(sample_data):
     df = sample_data.copy()
     df["income"] = df["income"].fillna(df["income"].median())
@@ -139,31 +155,81 @@ def test_pipeline_integration(sample_data, tmp_path):
     
     config = {
         "pipeline": {
-            "schema_validation": True,
-            "drop_duplicates": True,
-            "type_standardization": True,
-            "imputation": {
-                "numerical": {"strategy": "median", "add_indicators": True},
-                "categorical": {"strategy": "constant", "fill_value": "Unknown"}
+            "schema_validation": {
+                "enabled": True,
+                "strict": True,
             },
-            "rare_categories": {
-                "threshold_pct": 0.05,
-                "fill_value": "RARE"
+            "leakage_validation": {
+                "enabled": True,
+                "fail_on_detection": False,
             },
-            "encoding": {
-                "strategy": "target",
-                "target_cv_folds": 3
+            "metadata": {
+                "version": "2.0",
             },
-            "outliers": {
-                "strategy": "clip",
-                "method": "iqr"
-            },
-            "transformations": {
-                "income": "log1p"
-            },
-            "scaling": {
-                "strategy": "standard"
-            }
+            "available_components": [
+                "cleaner",
+                "missing",
+                "rare_categories",
+                "encoder",
+                "outliers",
+                "transformations",
+                "scaler",
+            ],
+            "steps": [
+                {
+                    "component": "cleaner",
+                    "params": {
+                        "drop_row_duplicates": True,
+                        "drop_col_duplicates": True,
+                        "coerce_objects_to_category": True,
+                    },
+                },
+                {
+                    "component": "missing",
+                    "params": {
+                        "num_strategy": "median",
+                        "cat_strategy": "constant",
+                        "cat_fill_value": "Unknown",
+                        "add_indicators": True,
+                    },
+                },
+                {
+                    "component": "rare_categories",
+                    "params": {
+                        "threshold_pct": 0.05,
+                        "fill_value": "RARE",
+                    },
+                },
+                {
+                    "component": "encoder",
+                    "params": {
+                        "default_strategy": "catboost",
+                        "column_strategies": {"occupation": "one_hot"},
+                        "target_cv_folds": 3,
+                    },
+                },
+                {
+                    "component": "outliers",
+                    "params": {
+                        "strategy": "clip",
+                        "method": "iqr",
+                    },
+                },
+                {
+                    "component": "transformations",
+                    "params": {
+                        "transformations": {
+                            "income": "log1p",
+                        },
+                    },
+                },
+                {
+                    "component": "scaler",
+                    "params": {
+                        "default_strategy": "standard",
+                    },
+                },
+            ],
         }
     }
     
@@ -178,6 +244,7 @@ def test_pipeline_integration(sample_data, tmp_path):
     assert (tmp_path / "outlier_report.json").exists()
     assert (tmp_path / "encoding_report.json").exists()
     assert (tmp_path / "scaling_report.json").exists()
+    assert (tmp_path / "transformation_report.json").exists()
     assert (tmp_path / "feature_metadata.json").exists()
     
     # Run transform
@@ -185,3 +252,32 @@ def test_pipeline_integration(sample_data, tmp_path):
     
     # Assert shapes are equal
     assert df_processed.shape[1] == df_test.shape[1]
+
+def test_strict_schema_validation_rejects_missing_columns(sample_data, tmp_path):
+    df = sample_data.copy()
+    y = df.pop("target")
+
+    config = {
+        "pipeline": {
+            "schema_validation": {
+                "enabled": True,
+                "strict": True,
+            },
+            "steps": [
+                {
+                    "component": "missing",
+                    "params": {
+                        "num_strategy": "median",
+                        "cat_strategy": "constant",
+                        "cat_fill_value": "Unknown",
+                    },
+                },
+            ],
+        }
+    }
+
+    pipeline = PreprocessingPipeline(config, reports_dir=str(tmp_path), target_column="target")
+    pipeline.fit_transform(df, y)
+
+    with pytest.raises(ValueError):
+        pipeline.transform(df.drop(columns=["income"]))

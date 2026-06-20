@@ -1,12 +1,4 @@
-"""Transformer registration directory.
-
-This module exposes the TRANSFORMER_REGISTRY dictionary which maps text-based 
-configuration keys (used in preprocessing YAML configurations) to actual custom 
-transformer classes.
-
-A global registry makes it easy to instantiate pipelines dynamically from static 
-configuration files without writing conditional initialization logic in python code.
-"""
+"""Registries for configurable preprocessing components and supported strategies."""
 
 from src.preprocessing.transformers.cleaning import DataCleaner
 from src.preprocessing.transformers.missing import MissingValueTransformer
@@ -15,6 +7,12 @@ from src.preprocessing.transformers.encoding import EncodingTransformer
 from src.preprocessing.transformers.outliers import OutlierTransformer
 from src.preprocessing.transformers.transformations import FeatureTransformer
 from src.preprocessing.transformers.scaling import FeatureScaler
+from src.preprocessing.strategies import (
+    ENCODER_REGISTRY,
+    OUTLIER_METHOD_REGISTRY,
+    SCALER_REGISTRY,
+    TRANSFORMATION_REGISTRY,
+)
 
 # Global registry mapping configuration strings to custom transformer classes.
 # Why: This architecture facilitates decoupling configuration from implementation.
@@ -26,4 +24,18 @@ TRANSFORMER_REGISTRY = {
     "outliers": OutlierTransformer,
     "transformations": FeatureTransformer,
     "scaler": FeatureScaler,
+}
+
+
+LEGACY_STEP_ALIASES = {
+    "cleaner": "cleaner",
+    "imputation": "missing",
+    "missing": "missing",
+    "rare_categories": "rare_categories",
+    "encoding": "encoder",
+    "encoder": "encoder",
+    "outliers": "outliers",
+    "transformations": "transformations",
+    "scaling": "scaler",
+    "scaler": "scaler",
 }

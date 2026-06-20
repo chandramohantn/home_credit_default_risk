@@ -12,8 +12,8 @@ Binary indicator columns are automatically skipped to retain their interpretabil
 import pandas as pd
 import numpy as np
 from typing import List, Dict, Optional, Any
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler, QuantileTransformer
 from src.preprocessing.transformers.base import BaseTransformer
+from src.preprocessing.strategies import SCALER_REGISTRY
 
 class FeatureScaler(BaseTransformer):
     """Scales numerical features inside a pandas DataFrame.
@@ -86,21 +86,18 @@ class FeatureScaler(BaseTransformer):
 
             strategy = self.column_strategies.get(col, self.default_strategy)
             
-            if strategy == "standard":
-                scaler = StandardScaler()
-            elif strategy == "minmax":
-                scaler = MinMaxScaler()
-            elif strategy == "robust":
-                # Why: RobustScaler uses median and IQR, making it resilient to outliers.
-                scaler = RobustScaler()
-            elif strategy == "quantile":
+            scaler_cls = SCALER_REGISTRY.get(strategy)
+            if scaler_cls is None and strategy != "none":
+                raise ValueError(f"Unknown scaling strategy: {strategy}")
+
+            if strategy == "none":
+                continue
+            if strategy == "quantile":
                 # Why: QuantileTransformer maps values to a standard normal distribution. 
                 # Very effective for Neural Networks to flatten complex, skewed shapes.
-                scaler = QuantileTransformer(random_state=42, n_quantiles=min(1000, len(X)))
-            elif strategy == "none":
-                continue
+                scaler = scaler_cls(random_state=42, n_quantiles=min(1000, len(X)))
             else:
-                raise ValueError(f"Unknown scaling strategy: {strategy}")
+                scaler = scaler_cls()
 
             # Fit scaler on non-null values only to prevent propagation of NaN statistics
             non_nulls = X[[col]].dropna()
@@ -151,3 +148,13 @@ class FeatureScaler(BaseTransformer):
             list of str: Feature names.
         """
         return self.feature_names_out_
+
+    def get_reports(self) -> Dict[str, Any]:
+        """Returns scaler metadata for pipeline-level reporting."""
+
+        return {
+            "scaling": {
+                col: str(type(scaler))
+                for col, scaler in self.scalers_.items()
+            }
+        }

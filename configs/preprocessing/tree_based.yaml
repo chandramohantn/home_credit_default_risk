@@ -2,31 +2,46 @@
 # Used for XGBoost, LightGBM, and CatBoost models.
 
 pipeline:
-  schema_validation: true
-  drop_duplicates: true
-  type_standardization: true
-  
-  datetime_cols: []
+  schema_validation:
+    enabled: true
+    strict: true
+    allow_extra_columns: true
 
-  imputation:
-    numerical:
-      strategy: "median"
-      add_indicators: true
-    categorical:
-      strategy: "constant"
-      fill_value: "Unknown"
+  leakage_validation:
+    enabled: true
+    fail_on_detection: false
 
-  rare_categories:
-    threshold_pct: 0.01
-    fill_value: "OTHER"
+  metadata:
+    version: "2.0"
 
-  encoding:
-    strategy: "target"  # Use out-of-fold target encoding
-    target_cv_folds: 5
-    target_smoothing: 10.0
+  available_components:
+    - cleaner
+    - missing
+    - rare_categories
+    - encoder
 
-  outliers:
-    strategy: "none"  # Tree models are robust to outliers
+  steps:
+    - component: cleaner
+      params:
+        drop_row_duplicates: true
+        drop_col_duplicates: true
+        coerce_objects_to_category: true
+        datetime_cols: []
 
-  scaling:
-    strategy: "none"  # Tree models don't require scaling
+    - component: missing
+      params:
+        num_strategy: "median"
+        cat_strategy: "constant"
+        cat_fill_value: "Unknown"
+        add_indicators: true
+
+    - component: rare_categories
+      params:
+        threshold_pct: 0.01
+        fill_value: "OTHER"
+
+    - component: encoder
+      params:
+        default_strategy: "target"  # Use out-of-fold target encoding
+        target_cv_folds: 5
+        target_smoothing: 10.0

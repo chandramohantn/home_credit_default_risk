@@ -247,3 +247,8 @@ class MissingValueTransformer(BaseTransformer):
             list of str: Final list of feature names.
         """
         return self.feature_names_out_
+
+    def get_reports(self) -> Dict[str, Any]:
+        """Returns imputation diagnostics for pipeline-level reporting."""
+
+        return {"missing_values": self.imputation_values_report_}

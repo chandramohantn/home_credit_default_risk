@@ -6,7 +6,7 @@ At a high level, we have already implemented:
 
 1. **Profiling and quality analysis** to summarize datasets, measure missingness, detect duplicates and near-constant features, analyze categorical cardinality, inspect target imbalance, and flag potential data leakage.
 2. **EDA orchestration** to generate target analysis, univariate and bivariate insights, correlation studies, outlier checks, mutual-information feature importance, dimensionality reduction outputs, figures, CSV deliverables, and markdown summaries.
-3. **A reusable preprocessing framework** with schema validation, leakage checks, metadata tracking, configurable transformers, and model-specific pipelines for tree-based, linear, and neural-network workflows.
+3. **A reusable preprocessing framework** with strict/configurable validation, leakage checks, metadata tracking, configurable transformers, strategy registries, and model-specific pipelines for tree-based, linear, and neural-network workflows.
 4. **Execution scripts and reports** that load raw data, run the implemented phases, and persist processed datasets plus JSON/CSV/figure artifacts under `reports/` and `data/processed/`.
 
 ## Implemented modules, classes, and functions
@@ -237,9 +237,23 @@ The sections below keep the same information as the original inventory, but use 
 - `fit_transform` — fits all preprocessing steps and transforms the training data in sequence.
 - `get_feature_names_out` — returns the final output feature names after preprocessing.
 
+This pipeline now supports **config-driven step order** and **component whitelisting** through `pipeline.steps` and `pipeline.available_components`.
+
 #### `registry`
 
 **`TRANSFORMER_REGISTRY`** — maps configuration keys to transformer classes for dynamic pipeline construction.
+
+**`LEGACY_STEP_ALIASES`** — maps legacy config section names to pipeline component names.
+
+#### `strategies`
+
+**`ENCODER_REGISTRY`** — lists the supported categorical encoding strategies.
+
+**`SCALER_REGISTRY`** — maps scaling strategy names to scaler implementations.
+
+**`TRANSFORMATION_REGISTRY`** — lists the supported feature-transformation strategies and their metadata.
+
+**`OUTLIER_METHOD_REGISTRY`** — lists the supported outlier-detection methods.
 
 #### `validators`
 

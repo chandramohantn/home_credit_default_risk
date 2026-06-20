@@ -10,6 +10,8 @@ state checking and the default implementation of standard interfaces, promoting
 code reuse and reducing boilerplate.
 """
 
+from typing import Any, Dict
+
 from sklearn.base import BaseEstimator, TransformerMixin
 
 class BaseTransformer(BaseEstimator, TransformerMixin):
@@ -82,3 +84,11 @@ class BaseTransformer(BaseEstimator, TransformerMixin):
             list of str: The output feature names. By default, returns the input names unchanged.
         """
         return input_features
+
+    def get_reports(self) -> Dict[str, Any]:
+        """Returns structured artifacts that should be persisted by the pipeline.
+
+        Returns:
+            Dict[str, Any]: Mapping of report name to payload. Defaults to no reports.
+        """
+        return {}

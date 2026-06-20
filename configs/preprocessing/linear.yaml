@@ -2,31 +2,56 @@
 # Used for Logistic Regression and other linear models.
 
 pipeline:
-  schema_validation: true
-  drop_duplicates: true
-  type_standardization: true
-  
-  datetime_cols: []
+  schema_validation:
+    enabled: true
+    strict: true
+    allow_extra_columns: true
 
-  imputation:
-    numerical:
-      strategy: "median"
-      add_indicators: true
-    categorical:
-      strategy: "constant"
-      fill_value: "Unknown"
+  leakage_validation:
+    enabled: true
+    fail_on_detection: false
 
-  rare_categories:
-    threshold_pct: 0.01
-    fill_value: "OTHER"
+  metadata:
+    version: "2.0"
 
-  encoding:
-    strategy: "one_hot"  # One-hot encoding is preferred for linear models
+  available_components:
+    - cleaner
+    - missing
+    - rare_categories
+    - encoder
+    - outliers
+    - scaler
 
-  outliers:
-    strategy: "clip"
-    method: "iqr"
-    threshold: 1.5
+  steps:
+    - component: cleaner
+      params:
+        drop_row_duplicates: true
+        drop_col_duplicates: true
+        coerce_objects_to_category: true
+        datetime_cols: []
 
-  scaling:
-    strategy: "robust"  # RobustScaler to center and scale numerical features
+    - component: missing
+      params:
+        num_strategy: "median"
+        cat_strategy: "constant"
+        cat_fill_value: "Unknown"
+        add_indicators: true
+
+    - component: rare_categories
+      params:
+        threshold_pct: 0.01
+        fill_value: "OTHER"
+
+    - component: encoder
+      params:
+        default_strategy: "one_hot"  # One-hot encoding is preferred for linear models
+
+    - component: outliers
+      params:
+        strategy: "clip"
+        method: "iqr"
+        threshold: 1.5
+
+    - component: scaler
+      params:
+        default_strategy: "robust"  # RobustScaler to center and scale numerical features
