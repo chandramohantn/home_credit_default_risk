@@ -2,27 +2,9 @@
 
 import pandas as pd
 import numpy as np
-from dataclasses import dataclass, field
-from typing import List, Dict, Any, Union
+from typing import List, Dict
 
-@dataclass
-class NumericalUnivariateStats:
-    """Statistics for a single numerical feature."""
-    mean: float
-    median: float
-    std: float
-    min: float
-    max: float
-    skew: float
-    kurtosis: float
-
-@dataclass
-class CategoricalUnivariateStats:
-    """Statistics for a single categorical feature."""
-    cardinality: int
-    top_categories: Dict[Any, int]
-    rare_categories: List[Any]
-    rare_threshold: float
+from .schema import CategoricalUnivariateStats, NumericalUnivariateStats
 
 class UnivariateAnalyzer:
     """Analyzes features individually."""

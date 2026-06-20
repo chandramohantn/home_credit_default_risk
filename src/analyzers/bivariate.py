@@ -2,25 +2,11 @@
 
 import pandas as pd
 import numpy as np
-from dataclasses import dataclass
-from typing import List, Dict, Any
+from typing import List, Dict
 from sklearn.feature_selection import mutual_info_classif, chi2
 from sklearn.preprocessing import LabelEncoder
 
-@dataclass
-class NumericBivariateStats:
-    """Statistics for a numerical feature vs target."""
-    mean_diff: float
-    median_diff: float
-    cohen_d: float
-    mutual_info: float
-
-@dataclass
-class CategoricalBivariateStats:
-    """Statistics for a categorical feature vs target."""
-    target_rate_per_category: Dict[Any, float]
-    chi2_score: float
-    mutual_info: float
+from .schema import CategoricalBivariateStats, NumericBivariateStats
 
 class BivariateAnalyzer:
     """Analyzes relationships between features and the target."""

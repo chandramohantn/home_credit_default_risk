@@ -2,15 +2,9 @@
 
 import pandas as pd
 import numpy as np
-from dataclasses import dataclass
 from typing import List, Dict
 
-@dataclass
-class OutlierStats:
-    """Statistics for outliers in a feature."""
-    iqr_outliers_count: int
-    zscore_outliers_count: int
-    outlier_indices: List[int]
+from .schema import OutlierStats
 
 class OutlierAnalyzer:
     """Detects outliers using IQR and Z-score methods."""

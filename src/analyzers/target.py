@@ -1,19 +1,7 @@
 """Module for advanced target variable analysis in EDA."""
 
 import pandas as pd
-import numpy as np
-from dataclasses import dataclass
-from typing import Dict, Any
-
-@dataclass
-class TargetEDAResult:
-    """Dataclass for target analysis results."""
-    counts: Dict[Any, int]
-    percentages: Dict[Any, float]
-    baseline_accuracy: float
-    baseline_precision: float
-    baseline_recall: float
-    baseline_f1: float
+from .schema import TargetEDAResult
 
 class TargetAnalyzer:
     """Analyzes the target variable distribution and baseline metrics."""

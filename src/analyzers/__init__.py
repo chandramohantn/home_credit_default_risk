@@ -16,3 +16,11 @@ from .outlier import OutlierAnalyzer
 from .importance import ImportanceAnalyzer
 from .dimensionality import DimensionalityAnalyzer
 from .missing_patterns import MissingPatternAnalyzer
+from .schema import (
+    TargetEDAResult,
+    NumericalUnivariateStats,
+    CategoricalUnivariateStats,
+    NumericBivariateStats,
+    CategoricalBivariateStats,
+    OutlierStats,
+)

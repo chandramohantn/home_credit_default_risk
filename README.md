@@ -102,9 +102,21 @@ The sections below keep the same information as the original inventory, but use 
 
 ### Analyzers
 
-#### `target`
+#### `schema`
 
 **`TargetEDAResult`** — stores target-distribution and baseline-metric outputs for EDA.
+
+**`NumericalUnivariateStats`** — stores descriptive statistics for one numerical feature.
+
+**`CategoricalUnivariateStats`** — stores category-frequency and rarity statistics for one categorical feature.
+
+**`NumericBivariateStats`** — stores target-separation statistics for one numerical feature.
+
+**`CategoricalBivariateStats`** — stores target-rate and association metrics for one categorical feature.
+
+**`OutlierStats`** — stores IQR-based and Z-score-based outlier counts and indices for a feature.
+
+#### `target`
 
 **`TargetAnalyzer`** — analyzes the target variable for EDA.
 
@@ -112,20 +124,12 @@ The sections below keep the same information as the original inventory, but use 
 
 #### `univariate`
 
-**`NumericalUnivariateStats`** — stores descriptive statistics for one numerical feature.
-
-**`CategoricalUnivariateStats`** — stores category-frequency and rarity statistics for one categorical feature.
-
 **`UnivariateAnalyzer`** — analyzes features independently.
 
 - `analyze_numeric` — computes descriptive statistics for numerical columns.
 - `analyze_categorical` — computes cardinality, top-category, and rare-category statistics for categorical columns.
 
 #### `bivariate`
-
-**`NumericBivariateStats`** — stores target-separation statistics for one numerical feature.
-
-**`CategoricalBivariateStats`** — stores target-rate and association metrics for one categorical feature.
 
 **`BivariateAnalyzer`** — analyzes relationships between features and the target.
 
@@ -140,8 +144,6 @@ The sections below keep the same information as the original inventory, but use 
 - `calculate_vif` — calculates variance inflation factor scores for selected columns.
 
 #### `outlier`
-
-**`OutlierStats`** — stores IQR-based and Z-score-based outlier counts and indices for a feature.
 
 **`OutlierAnalyzer`** — detects outliers in numerical features.
 
