@@ -2,39 +2,111 @@
 
 ## Implemented class diagram
 
+**How to read this diagram**
+
+- `+` denotes a public attribute or method.
+- `<<service>>` marks stateless analysis/reporting classes; `<<utility>>` marks helper classes.
+- Method signatures show the main inputs and, where relevant, default argument values.
+- `..>` indicates a dependency or usage relationship.
+- `*--` indicates strong ownership/composition inside `ProfilingResult`; `o--` indicates optional contained results.
+- Read the flow from `DataProfiler` outward: it coordinates analyzers, assembles a `ProfilingResult`, and that result is later consumed by reporting and visualization helpers.
+
 ```mermaid
 classDiagram
     class DataProfiler {
-        +target_column: optional target
+        +target_column
+        +DataProfiler(target_column=None)
         +run(df) ProfilingResult
     }
 
     class DatasetStatistics {
+        <<service>>
         +summarize(df) DatasetStats
     }
 
     class MissingValueAnalyzer {
-        +analyze(df, threshold) MissingValueReport
+        <<service>>
+        +analyze(df, threshold=50.0) MissingValueReport
     }
 
     class DuplicateAnalyzer {
+        <<service>>
         +analyze(df) DuplicateReport
     }
 
     class ConstantFeatureAnalyzer {
-        +analyze(df, near_constant_threshold) ConstantFeatureReport
+        <<service>>
+        +analyze(df, near_constant_threshold=99.0) ConstantFeatureReport
+    }
+
+    DataProfiler ..> DatasetStatistics : summarize()
+    DataProfiler ..> MissingValueAnalyzer : analyze()
+    DataProfiler ..> DuplicateAnalyzer : analyze()
+    DataProfiler ..> ConstantFeatureAnalyzer : analyze()
+```
+
+
+```mermaid
+classDiagram
+    class DataProfiler {
+        +target_column
+        +DataProfiler(target_column=None)
+        +run(df) ProfilingResult
+    }
+
+    class FeatureInspector {
+        <<utility>>
+        +get_numeric_columns(df) columns
+        +get_categorical_columns(df) columns
+        +get_datetime_columns(df) columns
+        +get_boolean_columns(df) columns
     }
 
     class CardinalityAnalyzer {
-        +analyze(df, categorical_only) CardinalityReport
+        <<service>>
+        +analyze(df, categorical_only=True) CardinalityReport
     }
 
     class TargetAnalyzer {
+        <<service>>
         +analyze(df, target_column) TargetAnalysisReport
-    }
+    } 
 
     class LeakageAnalyzer {
-        +analyze(df, target_column, corr_threshold, unique_ratio_threshold) LeakageReport
+        <<service>>
+        +analyze(df, target_column=None, corr_threshold=0.95, unique_ratio_threshold=0.95) LeakageReport
+    }
+
+	  CardinalityAnalyzer ..> FeatureInspector : categorical columns
+    LeakageAnalyzer ..> FeatureInspector : numeric columns
+    DataProfiler ..> CardinalityAnalyzer : analyze()
+    DataProfiler ..> LeakageAnalyzer : analyze()
+    DataProfiler ..> TargetAnalyzer : analyze()
+```
+
+
+```mermaid
+classDiagram
+    class DataProfiler {
+        +target_column
+        +DataProfiler(target_column=None)
+        +run(df) ProfilingResult
+    }
+
+    class MissingValueVisualizer {
+        +plot_missing_percentages(percentages, top_n=20) Figure
+    }
+
+    class MissingValueReport {
+        +counts: per-feature missing count
+        +percentages: per-feature missing percent
+        +features_above_threshold: flagged features
+    }
+
+    class ReportGenerator {
+        +ReportGenerator(output_dir)
+        +save_results(results) void
+        +save_figure(fig, filename) void
     }
 
     class ProfilingResult {
@@ -47,30 +119,36 @@ classDiagram
         +leakage: LeakageReport
     }
 
-    class ReportGenerator {
-        +save_results(results) void
-        +save_figure(fig, filename) void
+    class DatasetStats {
+        +rows: int
+        +columns: int
+        +memory_mb: float
     }
 
-    class MissingValueVisualizer {
-        +plot_missing_percentages(percentages, top_n) Figure
+    class DuplicateReport {
+        +duplicate_count: int
     }
 
-    class DatasetStats
-    class MissingValueReport
-    class DuplicateReport
-    class ConstantFeatureReport
-    class CardinalityReport
-    class TargetAnalysisReport
-    class LeakageReport
+    class ConstantFeatureReport {
+        +constant_features: columns
+        +near_constant_features: columns
+    }
 
-    DataProfiler ..> DatasetStatistics : summarize()
-    DataProfiler ..> MissingValueAnalyzer : analyze()
-    DataProfiler ..> DuplicateAnalyzer : analyze()
-    DataProfiler ..> ConstantFeatureAnalyzer : analyze()
-    DataProfiler ..> CardinalityAnalyzer : analyze()
-    DataProfiler ..> TargetAnalyzer : analyze()
-    DataProfiler ..> LeakageAnalyzer : analyze()
+    class CardinalityReport {
+        +cardinality: per-feature unique count
+    }
+
+    class LeakageReport {
+        +potential_leakage_columns: columns
+    }
+
+    class TargetAnalysisReport {
+        +positive_count: int
+        +negative_count: int
+        +imbalance_ratio: float
+        +baseline_accuracy: float
+    }
+
     DataProfiler --> ProfilingResult : returns
     ProfilingResult *-- DatasetStats
     ProfilingResult *-- MissingValueReport

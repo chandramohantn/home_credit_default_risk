@@ -40,6 +40,36 @@ classDiagram
         +run_umap(df, n_components)
     }
 
+    class TargetEDAResult
+    class NumericalUnivariateStats
+    class CategoricalUnivariateStats
+    class NumericBivariateStats
+    class CategoricalBivariateStats
+
+    EDAOrchestrator ..> TargetAnalyzer : analyze()
+    EDAOrchestrator ..> UnivariateAnalyzer : analyze_numeric()
+    EDAOrchestrator ..> BivariateAnalyzer : analyze numeric and categorical
+    EDAOrchestrator ..> CorrelationAnalyzer : analyze_correlations()
+    EDAOrchestrator ..> ImportanceAnalyzer : calculate_mutual_info()
+    EDAOrchestrator ..> DimensionalityAnalyzer : run_pca()
+    TargetAnalyzer --> TargetEDAResult
+    UnivariateAnalyzer --> NumericalUnivariateStats
+    UnivariateAnalyzer --> CategoricalUnivariateStats
+    BivariateAnalyzer --> NumericBivariateStats
+    BivariateAnalyzer --> CategoricalBivariateStats
+```
+
+
+```mermaid
+classDiagram
+    class EDAOrchestrator {
+        +output_dir: Path
+        +target_column: str
+        +run(df, num_features, cat_features) void
+        -save_csv_deliverables() void
+        -generate_summary_report() void
+    }
+
     class TargetVisualizer {
         +plot_distribution(df, target_column) Figure
         +plot_numeric_vs_target(df, feature, target_column) Figure
@@ -63,28 +93,11 @@ classDiagram
         +plot_projection(X_proj, target, title) Figure
     }
 
-    class TargetEDAResult
-    class NumericalUnivariateStats
-    class CategoricalUnivariateStats
-    class NumericBivariateStats
-    class CategoricalBivariateStats
-
-    EDAOrchestrator ..> TargetAnalyzer : analyze()
-    EDAOrchestrator ..> UnivariateAnalyzer : analyze_numeric()
-    EDAOrchestrator ..> BivariateAnalyzer : analyze numeric and categorical
-    EDAOrchestrator ..> CorrelationAnalyzer : analyze_correlations()
-    EDAOrchestrator ..> ImportanceAnalyzer : calculate_mutual_info()
-    EDAOrchestrator ..> DimensionalityAnalyzer : run_pca()
     EDAOrchestrator ..> TargetVisualizer : saves target plots
     EDAOrchestrator ..> DistributionVisualizer : saves distribution plots
     EDAOrchestrator ..> CorrelationVisualizer : saves heatmaps
     EDAOrchestrator ..> ImportanceVisualizer : saves MI plots
     EDAOrchestrator ..> DimensionalityVisualizer : saves PCA plots
-    TargetAnalyzer --> TargetEDAResult
-    UnivariateAnalyzer --> NumericalUnivariateStats
-    UnivariateAnalyzer --> CategoricalUnivariateStats
-    BivariateAnalyzer --> NumericBivariateStats
-    BivariateAnalyzer --> CategoricalBivariateStats
 ```
 
 ---

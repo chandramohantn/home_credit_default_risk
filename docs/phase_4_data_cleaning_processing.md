@@ -35,6 +35,25 @@ classDiagram
         +save_all_reports() void
     }
 
+    PreprocessingPipeline *-- SchemaValidator
+    PreprocessingPipeline *-- LeakageValidator
+    PreprocessingPipeline *-- MetadataTracker
+```
+
+
+```mermaid
+classDiagram
+    class PreprocessingPipeline {
+        +config: pipeline config
+        +reports_dir: Path
+        +target_column: str
+        +steps_: configured steps
+        +fit(X, y) PreprocessingPipeline
+        +transform(X) DataFrame
+        +fit_transform(X, y) DataFrame
+        +get_feature_names_out() feature names
+    }
+
     class BaseTransformer {
         +fitted_: bool
         +fit(X, y) BaseTransformer
@@ -58,9 +77,6 @@ classDiagram
     BaseTransformer <|-- FeatureTransformer
     BaseTransformer <|-- FeatureScaler
 
-    PreprocessingPipeline *-- SchemaValidator
-    PreprocessingPipeline *-- LeakageValidator
-    PreprocessingPipeline *-- MetadataTracker
     PreprocessingPipeline o-- DataCleaner : optional step
     PreprocessingPipeline o-- MissingValueTransformer : optional step
     PreprocessingPipeline o-- RareCategoryTransformer : optional step
